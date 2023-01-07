@@ -3,30 +3,31 @@ import { useSelector } from 'react-redux';
 import { selectors } from '../../slices/messagesSlice';
 
 const Messages = () => {
-  const { currentChannel, currentChannelId } = useSelector(({ channels }) => {
-    const { curChannelId, channelsList } = channels;
-    const curChannel = channelsList.find(({ id }) => id === curChannelId);
-    return { currentChannel: curChannel, currentChannelId: curChannelId };
+  const { channel, id } = useSelector(({ channels }) => {
+    const { channelsList, currentChannelId } = channels;
+    const curChannel = channelsList.find(({ id }) => id === currentChannelId);
+    return { channel: curChannel, id: currentChannelId };
   });
 
-  const curChannelName = currentChannel ? currentChannel.name : 'general';
-  const messages = useSelector(selectors.selectAll)
-    .filter(({ channelId }) => channelId === currentChannelId);
+  const currentChannelName = channel ? channel.name : 'general';
   
-    const messagesEndRef = useRef(null);
-    const scrollToBottom = () => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    };
+ const messages = useSelector(selectors.selectAll)
+    .filter((messages) => messages.channelId === id);
+
+  const messagesBottomRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesBottomRef.current?.scrollIntoView({ behavior: "auto" })
+  };
   
-    useEffect(() => {
-      scrollToBottom()
-    }, [messages]);
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages]);
 
   return(
     <>
       <div className='bg-light mb-4 p-3 shadow-sm small'>
         <p className='m-0'>
-          <b>{curChannelName}</b>
+          <b>{currentChannelName}</b>
         </p>
         <span className="text-muted">{messages.length} сообщений</span>
       </div>
@@ -38,7 +39,7 @@ const Messages = () => {
             {body}
           </div>
         ))}
-        <div ref={messagesEndRef}></div>
+        <div ref={messagesBottomRef}></div>
       </div>
     </>
   )

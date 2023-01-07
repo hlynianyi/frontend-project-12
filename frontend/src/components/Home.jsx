@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { actions as channelsActions } from './../slices/channelsSlice';
 import { actions as messagesActions } from './../slices/messagesSlice';
@@ -7,27 +6,25 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ChannelsTitle from './ChatElements/ChannelsTitle';
 import ChannelsList from './ChatElements/ChannelsList';
 import Messages from './ChatElements/Messages';
-// import ChannelsList from './ChatElements/ChannelsList';
 import routes from './../routes';
 import axios from 'axios';
 import InputForm from './ChatElements/InputForm';
+import AddChannel from './Modals/AddChannel';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const MessagesContext = React.createContext({});
   
   useEffect(() => {
     const fetchInitData = async () => {
       const token = localStorage.getItem('token');
       const response = await axios.get(routes.data(), { headers: { Authorization: `Bearer ${token}` } });
       const { channels, messages, currentChannelId } = response.data;
-      console.log(
-      'channels,', channels, 
-      '\nmessages', messages, 
-      ',\ncurrentChannelId', currentChannelId)
       dispatch(channelsActions.addChannels(channels));
       dispatch(channelsActions.setCurrentChannelId(currentChannelId));
       dispatch(messagesActions.addMessages(messages));
+
+      console.log('Channel ID:', currentChannelId, 
+        '| Channels:', channels,  '\nMessages:', messages)
     };
     fetchInitData();
   }, [dispatch]);

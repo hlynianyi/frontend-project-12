@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Dropdown, Nav, ButtonGroup } from 'react-bootstrap';
+import { Button, Nav, } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 // import { actions as modalActions } from '../../slices/modalSlice';
@@ -19,7 +19,7 @@ const ChannelsList = () => {
             <Button 
               className='w-100 rounded-0 text-start' 
               variant={id === currentChannelId ? 'secondary' : ''}
-              onClick={() => dispatch(channelsActions.setCurrentChannelId)}
+              onClick={() => dispatch(channelsActions.setCurrentChannelId(id))}
               >
               <span className='me-1'>#</span>
               {name}

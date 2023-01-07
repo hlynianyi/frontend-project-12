@@ -7,7 +7,7 @@ import socket from '../../socket';
 // import { useTranslation } from 'react-i18next';
 
 const InputForm = () => {
-  const currentChannelId = useSelector(( {channels}) => channels.currentChannelId);
+  const channelId = useSelector(( {channels}) => channels.currentChannelId);
   const username = localStorage.getItem('user');
   const [isSubmitting, setSubmitting] = useState(false);
   
@@ -20,7 +20,7 @@ const InputForm = () => {
     }),
     onSubmit: ({ body }, { resetForm }) => {
       setSubmitting(true);
-      socket.emit('newMessage', { body, currentChannelId, username}, (response) => {
+      socket.emit('newMessage', { body, channelId, username}, (response) => {
         console.log('STATUS:', response.status);
         setSubmitting(false);
       });
