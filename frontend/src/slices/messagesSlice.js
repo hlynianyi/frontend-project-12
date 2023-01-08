@@ -12,8 +12,12 @@ const channelsSlice = createSlice({
     addMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
-    //
-  }
+    builder.addCase(channelsActions.removeChannel, (state, { payload }) => {
+      const allEntities = Object.values(state.entities);
+      const deletedEntities = allEntities.filter((entity) => entity.channelId === payload.id);
+      messagesAdapter.removeMany(state, deletedEntities);
+    });
+  },
 });
 
 export const selectors = messagesAdapter.getSelectors((state) => state.messages)

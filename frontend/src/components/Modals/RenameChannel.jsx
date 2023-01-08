@@ -1,17 +1,19 @@
-import { useFormik } from "formik";
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import socket from "../../socket";
+import { actions as modalActions } from '../../slices/modalSlice';
+import { useFormik, yupToFormErrors } from "formik";
+import { useEffect } from "react";
 import * as yup from 'yup';
 import { Form, Modal, Button } from 'react-bootstrap';
-import { actions as modalActions } from '../../slices/modalSlice';
-import { actions as channelsActions } from '../../slices/channelsSlice';
-import socket from '../../socket';
 
-const AddModal = () => {
+const RenameChannel = () => {
   const dispatch = useDispatch();
-  const channelsNames = useSelector(({ channels }) => channels.channelsList)
-    .map(({ name }) => name);
+  const id = useSelector((({ modals })=> modals.handledChannelId));
   const [isSubmitting, setSubmitting] = useState(false);
+  const channelsNames = useSelector(({ channels }) => channels.channelsList)
+    .map(({ name}) => name);
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -21,25 +23,21 @@ const AddModal = () => {
     }),
     onSubmit: ({ name }) => {
       setSubmitting(true);
-      socket.emit('newChannel', { name }, (response) => {
-        const { status, data } = response;
-        console.log(status);
-        dispatch(channelsActions.setCurrentChannelId(data.id));
-        setSubmitting(false);
-      });
-      dispatch(modalActions.setAction(null));
-    },
+      socket.emit('renameChannel', { id, name }, (response) => {
+      console.log('response:', response.status);
+      setSubmitting(false);
+    });
+    dispatch(modalActions.setAction(null));
+    }
   });
 
   const inputRef = useRef();
-  useEffect(() => inputRef.current.focus(), [])
+  useEffect(() => inputRef.current.focus(), []);
 
   return (
     <Modal centered show onHide={() => dispatch(modalActions.setAction(null))}>
       <Modal.Header closeButton>
-        <Modal.Title>
-          Добавить канал
-        </Modal.Title>
+        <Modal.Title>{'Переименовать канал'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -47,12 +45,12 @@ const AddModal = () => {
             <Form.Control 
               required
               className="mb-2"
-              id="name" 
+              id="name"
               name="name"
               ref={inputRef}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isInvalid={formik.touched.name && formik.errors.name}
+              isInvalid={ formik.errors.name}
             />
             <Form.Label className="visually-hidden">Имя канала</Form.Label>
             <Form.Control.Feedback type='invalid'>{formik.errors.name}</Form.Control.Feedback>
@@ -67,4 +65,4 @@ const AddModal = () => {
   );
 };
 
-export default AddModal;
+export default RenameChannel;

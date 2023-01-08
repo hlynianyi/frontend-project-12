@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { setNestedObjectValues, useFormik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { useFormik } from 'formik';
 import axios from 'axios';
 import Pic from '../assets/login.jpg';
-import { Link, redirect, useLocation, useNavigate } from 'react-router-dom';
-import { Form, FloatingLabel, Button, Container, Row, Col, Card, Image, } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Form, FloatingLabel, Button, } from 'react-bootstrap';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);

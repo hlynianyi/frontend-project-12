@@ -1,12 +1,12 @@
 import addChannel from './AddChannel';
-// import RemoveModal from './RemoveModal';
-// import RenameModal from './RenameModal';
+import RemoveChannel from './RemoveChannel';
+import RenameChannel from './RenameChannel';
 
 const modals = {
   add: addChannel,
-  // renaming: RenameModal,
-  // removing: RemoveModal,
+  rename: RenameChannel,
+  remove: RemoveChannel,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (modalName) => modals[modalName];
+export default (actionType) => modals[actionType];

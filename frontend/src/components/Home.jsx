@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions as channelsActions } from './../slices/channelsSlice';
 import { actions as messagesActions } from './../slices/messagesSlice';
-import { Container, Row, Col } from 'react-bootstrap';
 import ChannelsTitle from './ChatElements/ChannelsTitle';
 import ChannelsList from './ChatElements/ChannelsList';
 import Messages from './ChatElements/Messages';
+import InputForm from './ChatElements/InputForm';
+import { Container, Row, Col } from 'react-bootstrap';
 import routes from './../routes';
 import axios from 'axios';
-import InputForm from './ChatElements/InputForm';
-import AddChannel from './Modals/AddChannel';
 
 const Home = () => {
   const dispatch = useDispatch();
