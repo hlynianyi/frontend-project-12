@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/glinyany/frontend-project-12/issues"
   },
-  "homepage": "https://github.com/glinyany/frontend-project-12#readme",
+  "homepage": "https://github.com/glinyany/frontend-project-12",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6"
   }
