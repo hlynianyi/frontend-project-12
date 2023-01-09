@@ -67,4 +67,3 @@ const ChannelsList = () => {
 }
 
 export default ChannelsList;
-{/* <Dropdown as={ButtonGroup}>n</Dropdown> */}

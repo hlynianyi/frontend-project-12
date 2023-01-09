@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Link, Route, Routes, Navigate, Outlet } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { BrowserRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { actions as messageActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import Login from './Login.jsx';
@@ -10,7 +9,6 @@ import Home from './Home.jsx';
 import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import socket from '../socket.js';
-import AuthProvider from '../context/AuthProvider';
 
 const PrivateRoute = () => {
   const isAuth = localStorage.getItem('token');
@@ -37,8 +35,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <NavigationBar />
+      <NavigationBar />
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
@@ -47,7 +44,6 @@ const App = () => {
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<Signup />}/>
         </Routes>
-      </AuthProvider>
     </BrowserRouter>
   );
 }

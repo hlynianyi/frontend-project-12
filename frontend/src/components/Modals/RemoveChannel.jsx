@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions as modalActions } from '../../slices/modalSlice';
 import { Modal, Button } from 'react-bootstrap';
 import socket from '../../socket';
-// import change modals
+
 const RemoveChannel = () => {
   const dispatch = useDispatch();
   const id = useSelector((( { modals }) => modals.handledChannelId));

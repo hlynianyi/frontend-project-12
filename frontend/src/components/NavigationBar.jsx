@@ -1,14 +1,11 @@
-import { useContext } from "react";
 import { Button, Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import AuthContext from '../context/AuthContext.js';
 import { useNavigate } from 'react-router-dom';
+
 const NavigationBar = () => {
-  const { isLoggedIn, setLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const logOut = () => {
-    setLoggedIn(false);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     console.log("LOGGED OUT");

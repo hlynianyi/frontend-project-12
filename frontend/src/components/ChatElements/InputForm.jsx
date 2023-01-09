@@ -4,7 +4,6 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import socket from '../../socket';
-// import { useTranslation } from 'react-i18next';
 
 const InputForm = () => {
   const channelId = useSelector(( {channels}) => channels.currentChannelId);

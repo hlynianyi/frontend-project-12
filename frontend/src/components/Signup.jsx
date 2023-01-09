@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { FormikContext, useFormik } from 'formik';
-import { useContext, useRef } from 'react';
+import { useFormik } from 'formik';
+import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Form, FloatingLabel, Button, } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import signupPicture from '../assets/signup.jpg';
 import * as yup from 'yup';
-// import AuthContext from '../context/AuthContext.js';
 
 const Signup = () => {
-  // const { setLoggedIn } = useContext(AuthContext);
   const [signupFailed, setSignupFailed] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -45,12 +43,13 @@ const Signup = () => {
         localStorage.setItem('user', response.data.username);
         setSubmitting(false);
         setSignupFailed(false);
-        // setLoggedIn(true);
         navigate('/');
       } catch (e){
-        setSubmitting(false);
         console.log('e :>> ', e);
-        if (e.response.status === 409) setSignupFailed(true);
+        setSubmitting(false);
+        // if (e.response.status === 409) {
+        //   return setSignupFailed(true);
+        // }
         setSignupFailed(true);
       }
     },
@@ -152,7 +151,6 @@ const Signup = () => {
                   </Button>
                 </Form.Group>
               </Form>
-
             </div>
           </div>
         </div>

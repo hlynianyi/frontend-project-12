@@ -4,11 +4,8 @@ import axios from 'axios';
 import loginPicture from '../assets/login.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, FloatingLabel, Button, } from 'react-bootstrap';
-import AuthContext from '../context/AuthContext.js';
-import { useContext } from 'react';
 
 const Login = () => {
-  const { setLoggedIn } = useContext(AuthContext);
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +20,6 @@ const Login = () => {
       localStorage.setItem('token', userToken.data.token);
       localStorage.setItem('user', userToken.data.username);
       setAuthFailed(false);
-      setLoggedIn(true);
       navigate('/')
       } catch (e){
         console.log('Token issue.. (login.jsx)', e);
