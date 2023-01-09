@@ -4,7 +4,7 @@
 ## Deployment
 https://hlynianyi-chat.up.railway.app/
 
-# Real-time Chat Application (like Slack) on React/Redux using:
+##  Real-time Chat Application (like Slack) on React/Redux using:
 - AJAX
 - REST
 - websockets
