@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Link, Route, Routes, Navigate, Outlet } from 'react-router-dom';
-import { Button, Navbar } from 'react-bootstrap';
-import Error from './ErrorPage.jsx';
-import Login from './Login.jsx';
-import Home from './Home.jsx';
-import socket from '../socket.js';
+import { Button } from 'react-bootstrap';
 import { actions as messageActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
-
+import Login from './Login.jsx';
+import Signup from './Signup.jsx';
+import Home from './Home.jsx';
+import Error from './ErrorPage.jsx';
+import NavigationBar from './NavigationBar.jsx';
+import socket from '../socket.js';
+import AuthProvider from '../context/AuthProvider';
 
 const PrivateRoute = () => {
   const isAuth = localStorage.getItem('token');
@@ -35,20 +37,17 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Navbar bg="white" expand="lg" className ="shadow-sm">
-        <div className="container">
-          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-          <Button>Выйти</Button>
-        </div>
-      </Navbar>
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="*" element={<Error />}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/signup" />
-      </Routes>
+      <AuthProvider>
+        <NavigationBar />
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route path="*" element={<Error />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/signup" element={<Signup />}/>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
