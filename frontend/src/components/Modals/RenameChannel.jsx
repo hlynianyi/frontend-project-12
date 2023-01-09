@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "../../socket";
 import { actions as modalActions } from '../../slices/modalSlice';
-import { useFormik, yupToFormErrors } from "formik";
+import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as yup from 'yup';
 import { Form, Modal, Button } from 'react-bootstrap';
