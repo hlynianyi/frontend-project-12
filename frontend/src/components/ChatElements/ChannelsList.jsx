@@ -3,9 +3,12 @@ import { Button, Dropdown, Nav, ButtonGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as modalActions } from '../../slices/modalSlice';
+import { useTranslation } from 'react-i18next';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const channelsList = useSelector(({ channels }) => channels.channelsList);
   const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
 
@@ -15,7 +18,6 @@ const ChannelsList = () => {
         const { id, name, removable } = channel;
       
         const remove = () => {
-          console.log('TO REMOVE CH:', id)
           dispatch(modalActions.setAction('remove'));
           dispatch(modalActions.setHandledChannelId(id));
         };
@@ -32,7 +34,7 @@ const ChannelsList = () => {
               onClick={() => dispatch(channelsActions.setCurrentChannelId(id))}
               variant={id === currentChannelId ? 'secondary' : ''}
               >
-              <span className='me-1'>#</span>
+              <span className='me-1'>{t('homepage.channelSign')}</span>
               {name}
             </Button>
             )}
@@ -43,7 +45,7 @@ const ChannelsList = () => {
               onClick={() => dispatch(channelsActions.setCurrentChannelId(id))}
               variant={id === currentChannelId ? 'secondary' : ''}
             >
-              <span className="me-1">#</span>
+              <span className="me-1">{t('homepage.channelSign')}</span>
               {name}
             </Button>
             <Dropdown.Toggle
@@ -51,11 +53,11 @@ const ChannelsList = () => {
               variant={id === currentChannelId ? 'secondary' : ''}
               className="flex-grow-0"
             >
-              <span className="visually-hidden">{'#'}</span>
+              <span className="visually-hidden">{t('homepage.channelSign')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={remove}>{'Удалить'}</Dropdown.Item>
-              <Dropdown.Item onClick={rename}>{'Переименовать'}</Dropdown.Item>
+              <Dropdown.Item onClick={remove}>{t('homepage.remove')}</Dropdown.Item>
+              <Dropdown.Item onClick={rename}>{t('homepage.rename')}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
             )}

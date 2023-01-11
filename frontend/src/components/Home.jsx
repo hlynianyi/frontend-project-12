@@ -12,7 +12,7 @@ import axios from 'axios';
 
 const Home = () => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const fetchInitData = async () => {
       const token = localStorage.getItem('token');
@@ -21,9 +21,6 @@ const Home = () => {
       dispatch(channelsActions.addChannels(channels));
       dispatch(channelsActions.setCurrentChannelId(currentChannelId));
       dispatch(messagesActions.addMessages(messages));
-
-      console.log('Channel ID:', currentChannelId, 
-        '| Channels:', channels,  '\nMessages:', messages)
     };
     fetchInitData();
   }, [dispatch]);

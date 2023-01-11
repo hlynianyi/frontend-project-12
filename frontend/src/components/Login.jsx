@@ -4,10 +4,12 @@ import axios from 'axios';
 import loginPicture from '../assets/login.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, FloatingLabel, Button, } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -22,7 +24,6 @@ const Login = () => {
       setAuthFailed(false);
       navigate('/')
       } catch (e){
-        console.log('Token issue.. (login.jsx)', e);
         setAuthFailed(true);
         formik.resetForm();
       };
@@ -44,10 +45,12 @@ const Login = () => {
                 <img src={loginPicture} className='rounded-circle' alt="Войти"/>
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">
+                  {t('login.entry')}
+                </h1>
                 <FloatingLabel
                   controlId='username'
-                  label='Ваш ник'
+                  label={t('login.username')}
                   className="mb-3">
                   <Form.Control
                     required
@@ -55,7 +58,7 @@ const Login = () => {
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     onBlur={formik.handleBlur}
-                    placeholder="Ваш ник"
+                    placeholder={t('login.username')}
                     name="username"
                     autoComplete="username"
                     isInvalid={authFailed}
@@ -63,29 +66,30 @@ const Login = () => {
                 </FloatingLabel>
                 <FloatingLabel
                   controlId='password'
-                  label='Пароль'
+                  label={t('login.password')}
                   className='mb-4'>
                   <Form.Control 
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
-                    placeholder="Пароль"
+                    placeholder={t('login.password')}
                     name="password"
                     autoComplete="password"
                     isInvalid={authFailed}
                     required
                     disabled={formik.isSubmitting} />
                   <Form.Control.Feedback type='invalid' tooltip>
-                    Неверные имя пользователя или пароль
+                    {t('errors.login')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button className="w-100 mb-3" type="submit" disabled={formik.isSubmitting} variant="outline-primary">Войти</Button>
+                <Button className="w-100 mb-3" type="submit" disabled={formik.isSubmitting} variant="outline-primary">{t('login.entry')}</Button>
               </Form>
             </div>
             <div className="card-footer p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта?</span>
-                  <Link to="/signup"> Регистрация</Link>
+                  <span>{t('login.question')}</span>
+                  {t('login.space')}
+                  <Link to="/signup">{t('login.signup')}</Link>
                 </div>
             </div>
           </div>
