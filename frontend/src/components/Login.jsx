@@ -49,18 +49,17 @@ const Login = () => {
                   controlId='username'
                   label='Ваш ник'
                   className="mb-3">
-                <Form.Control
-                  required
-                  ref={inputRef}
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
-                  onBlur={formik.handleBlur}
-                  placeholder="Ваш ник"
-                  id="username"
-                  name="username"
-                  autoComplete="username"
-                  isInvalid={authFailed}
-                  disabled={formik.isSubmitting}/>
+                  <Form.Control
+                    required
+                    ref={inputRef}
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    onBlur={formik.handleBlur}
+                    placeholder="Ваш ник"
+                    name="username"
+                    autoComplete="username"
+                    isInvalid={authFailed}
+                    disabled={formik.isSubmitting}/>
                 </FloatingLabel>
                 <FloatingLabel
                   controlId='password'
@@ -71,7 +70,6 @@ const Login = () => {
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
                     placeholder="Пароль"
-                    id="password"
                     name="password"
                     autoComplete="password"
                     isInvalid={authFailed}

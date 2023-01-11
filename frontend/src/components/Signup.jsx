@@ -74,31 +74,29 @@ const Signup = () => {
                 <FloatingLabel
                   controlId='username'
                   label='Имя пользователя'
-                  className="mb-3" >
-                <Form.Control
-                  required
-                  ref={inputRef}
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
-                  onBlur={formik.handleBlur}
-                  placeholder="Имя пользователя"
-                  id="username"
-                  name="username"
-                  autoComplete="username"
-                  isInvalid={signupFailed || formik.errors.username}
-                  disabled={formik.isSubmitting} />
-                <Form.Control.Feedback type="invalid" tooltip>
+                  className="mb-3">
+                  <Form.Control
+                    required
+                    ref={inputRef}
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    onBlur={formik.handleBlur}
+                    placeholder="Имя пользователя"
+                    name="username"
+                    autoComplete="username"
+                    isInvalid={signupFailed || formik.errors.username}
+                    disabled={formik.isSubmitting} />
+                  <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel
                   controlId='password'
                   label='Пароль'
-                  className='mb-3' >
+                  className='mb-3'>
                   <Form.Control
                     required
                     placeholder="Пароль"
-                    id="password"
                     name="password"
                     autoComplete="new-password"
                     type='password'
