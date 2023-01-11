@@ -45,48 +45,43 @@ const Login = () => {
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">Войти</h1>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel
-                    label='Ваш ник'
-                    className="mb-3"
-                  >
-                  <Form.Control
-                    required
-                    ref={inputRef}
+                <FloatingLabel
+                  controlId='username'
+                  label='Ваш ник'
+                  className="mb-3">
+                <Form.Control
+                  required
+                  ref={inputRef}
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                  onBlur={formik.handleBlur}
+                  placeholder="Ваш ник"
+                  id="username"
+                  name="username"
+                  autoComplete="username"
+                  isInvalid={authFailed}
+                  disabled={formik.isSubmitting}/>
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId='password'
+                  label='Пароль'
+                  className='mb-4'>
+                  <Form.Control 
                     onChange={formik.handleChange}
-                    value={formik.values.username}
+                    value={formik.values.password}
                     onBlur={formik.handleBlur}
-                    placeholder="Ваш ник"
-                    id="username"
-                    name="username"
-                    autoComplete="username"
+                    placeholder="Пароль"
+                    id="password"
+                    name="password"
+                    autoComplete="password"
                     isInvalid={authFailed}
-                    disabled={formik.isSubmitting}
-                  />
-                  </FloatingLabel>
-                  
-                </Form.Group>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel
-                    label='Пароль'
-                    className='mb-4'
-                  >
-                    <Form.Control 
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                      onBlur={formik.handleBlur}
-                      placeholder="Пароль"
-                      id="password"
-                      name="password"
-                      autoComplete="password"
-                      isInvalid={authFailed}
-                      required
-                      disabled={formik.isSubmitting}
-                    />
-                  </FloatingLabel>
-                  <div className="invalid-tooltip">Неверные имя пользователя или пароль</div>
-                </Form.Group>
-                <Button className="w-100 mb-3 btn btn-outline-primary" type="submit" disabled={formik.isSubmitting} variant="outline-primary">Войти</Button>
+                    required
+                    disabled={formik.isSubmitting} />
+                  <Form.Control.Feedback type='invalid' tooltip>
+                    Неверные имя пользователя или пароль
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+                <Button className="w-100 mb-3" type="submit" disabled={formik.isSubmitting} variant="outline-primary">Войти</Button>
               </Form>
             </div>
             <div className="card-footer p-4">

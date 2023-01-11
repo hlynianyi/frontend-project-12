@@ -10,7 +10,7 @@ const NavigationBar = () => {
     localStorage.removeItem('user');
     console.log("LOGGED OUT");
     navigate('login');
-  }
+  };
  
   console.log('isLoggedIn', localStorage.getItem('user'));
   const isAuth = localStorage.getItem('token') !== null ? true : false;

@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar />
+        <NavigationBar />
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />

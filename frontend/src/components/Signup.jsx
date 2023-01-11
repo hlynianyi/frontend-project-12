@@ -71,92 +71,80 @@ const Signup = () => {
               </div>
               <Form onSubmit={formik.handleSubmit} className='w-50'>
                 <h1 className='text-center mb-4'>Регистрация</h1>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel
-                    label='Имя пользователя'
-                    className="mb-3"
-                  >
+                <FloatingLabel
+                  controlId='username'
+                  label='Имя пользователя'
+                  className="mb-3" >
+                <Form.Control
+                  required
+                  ref={inputRef}
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                  onBlur={formik.handleBlur}
+                  placeholder="Имя пользователя"
+                  id="username"
+                  name="username"
+                  autoComplete="username"
+                  isInvalid={signupFailed || formik.errors.username}
+                  disabled={formik.isSubmitting} />
+                <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.username}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId='password'
+                  label='Пароль'
+                  className='mb-3' >
                   <Form.Control
                     required
-                    ref={inputRef}
+                    placeholder="Пароль"
+                    id="password"
+                    name="password"
+                    autoComplete="new-password"
+                    type='password'
+                    aria-describedby='passwordHelpBlock'
                     onChange={formik.handleChange}
-                    value={formik.values.username}
+                    value={formik.values.password}
                     onBlur={formik.handleBlur}
-                    placeholder="Имя пользователя"
-                    id="username"
-                    name="username"
-                    autoComplete="username"
-                    isInvalid={signupFailed || formik.errors.username}
-                    disabled={formik.isSubmitting}
-                  />
-                  </FloatingLabel>
-                  <Form.Control.Feedback type="invalid">
-                      {formik.errors.username}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel
-                    label='Пароль'
-                    className='mb-3'
-                  >
-                    <Form.Control
-                      required
-                      placeholder="Пароль"
-                      id="password"
-                      name="password"
-                      autoComplete="new-password"
-                      type='password'
-                      aria-describedby='passwordHelpBlock'
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                      onBlur={formik.handleBlur}
-                      isInvalid={signupFailed || formik.errors.password}
-                      disabled={formik.isSubmitting}
-                    />
-                  </FloatingLabel>
-                  <Form.Control.Feedback type="invalid">
-                      {formik.errors.password}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="form-floating mb-4">
-                  <FloatingLabel
-                    label='Подтвердите пароль'
-                    className='mb-3'
-                  >
-                    <Form.Control
-                      required
-                      placeholder="Пароли должны совпадать"
-                      name="confirmPassword"
-                      autoComplete="new-password"
-                      type='password'
-                      onChange={formik.handleChange}
-                      value={formik.values.confirmPassword}
-                      onBlur={formik.handleBlur}
-                      isInvalid={signupFailed || formik.errors.confirmPassword}
-                      disabled={formik.isSubmitting}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.confirmPassword || 'Пользователь существует'}
-                    </Form.Control.Feedback>
-                  </FloatingLabel>
-                </Form.Group>
-                <Form.Group className='form-floating mb-4'>
+                    isInvalid={signupFailed || formik.errors.password}
+                    disabled={formik.isSubmitting} />
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.password}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId='confirmPassword'
+                  label='Подтвердите пароль'
+                  className='mb-4' >
+                  <Form.Control
+                    required
+                    placeholder="Пароли должны совпадать"
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    type='password'
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmPassword}
+                    onBlur={formik.handleBlur}
+                    isInvalid={signupFailed || formik.errors.confirmPassword}
+                    disabled={formik.isSubmitting} />
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.confirmPassword || 'Пользователь существует'}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
                 <Button
-                    type="submit"
-                    className="w-100 mb-3"
-                    variant="outline-primary"
-                    disabled={isSubmitting}
-                  >
-                    Зарегистрироваться
-                  </Button>
-                </Form.Group>
+                  type="submit"
+                  className="w-100 mb-3"
+                  variant="outline-primary"
+                  disabled={isSubmitting} >
+                  Зарегистрироваться
+                </Button>
               </Form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Signup;
