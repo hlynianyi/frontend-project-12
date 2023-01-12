@@ -9,6 +9,7 @@ import signupPicture from '../assets/signup.jpg';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import routes from '../routes';
 
 const Signup = () => {
   const [signupFailed, setSignupFailed] = useState(false);
@@ -38,7 +39,7 @@ const Signup = () => {
       try {
         setSubmitting(true);
 
-        const response = await axios.post('/api/v1/signup', {username, password});
+        const response = await axios.post(routes.signUp(), {username, password});
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', response.data.username);
 

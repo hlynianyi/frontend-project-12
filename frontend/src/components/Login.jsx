@@ -6,13 +6,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, FloatingLabel, Button, } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import routes from '../routes';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -22,7 +23,7 @@ const Login = () => {
       try {
         setSubmitting(true);
 
-        const { data } = await axios.post('/api/v1/login', values);
+        const { data } = await axios.post(routes.login(), values);
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', data.username);
 
