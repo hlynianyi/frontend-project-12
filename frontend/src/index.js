@@ -11,7 +11,12 @@ import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
   accessToken: '36a4aa4a006046a5a36347485405cb50',
-  enviroment: 'production',
+  enviroment: 'testenv',
+};
+
+function TestError() {
+  const a = null;
+  return a.hello();
 }
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
@@ -25,6 +30,7 @@ root.render(
           <ModalComponent />
           <ToastContainer />
         </Provider>
+        <TestError />
       </ErrorBoundary>
     </RollbarProvider>
   </div>
