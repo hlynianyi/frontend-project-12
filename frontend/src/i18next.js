@@ -5,7 +5,6 @@ import resources from './locales/index';
 i18n
   .use(initReactI18next)
   .init({
-    debug: true,
     fallbackLng: 'ru',
     resources,
 

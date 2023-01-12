@@ -58,5 +58,11 @@ export default {
       suggestion1: 'Но вы можете перейти ',
       suggestionLink: 'на главную страницу',
     },
+    toastify: {
+      added: 'Канал создан',
+      renamed: 'Канал переименован',
+      deleted: 'Канал удален',
+      network: 'Ошибка соединения',
+    }
   },
 };

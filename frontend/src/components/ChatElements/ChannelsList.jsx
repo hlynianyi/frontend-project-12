@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import { actions as modalActions } from '../../slices/modalSlice';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  filter.loadDictionary('ru');
 
   const channelsList = useSelector(({ channels }) => channels.channelsList);
   const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
@@ -46,7 +48,7 @@ const ChannelsList = () => {
               variant={id === currentChannelId ? 'secondary' : ''}
             >
               <span className="me-1">{t('homepage.channelSign')}</span>
-              {name}
+              {filter.clean(name)}
             </Button>
             <Dropdown.Toggle
               split

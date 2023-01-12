@@ -5,9 +5,11 @@ import loginPicture from '../assets/login.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, FloatingLabel, Button, } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -18,14 +20,24 @@ const Login = () => {
     },
     onSubmit: async (values) => {
       try {
-      const userToken = await axios.post('/api/v1/login', values);
-      localStorage.setItem('token', userToken.data.token);
-      localStorage.setItem('user', userToken.data.username);
-      setAuthFailed(false);
-      navigate('/')
-      } catch (e){
-        setAuthFailed(true);
-        formik.resetForm();
+        setSubmitting(true);
+
+        const { data } = await axios.post('/api/v1/login', values);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', data.username);
+
+        setAuthFailed(false);
+        setSubmitting(false);
+
+        navigate('/')
+      } catch (error){
+        setSubmitting(false);
+        if (error.message === 'Network Error') {
+          toast.error(t('toastify.network'));
+        };
+        if (error.response.status === 401) {
+          setAuthFailed(true);
+        };
       };
     },
   });
@@ -82,7 +94,7 @@ const Login = () => {
                     {t('errors.login')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button className="w-100 mb-3" type="submit" disabled={formik.isSubmitting} variant="outline-primary">{t('login.entry')}</Button>
+                <Button className="w-100 mb-3" type="submit" disabled={isSubmitting} variant="outline-primary">{t('login.entry')}</Button>
               </Form>
             </div>
             <div className="card-footer p-4">

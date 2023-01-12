@@ -7,6 +7,7 @@ import { actions as modalActions } from '../../slices/modalSlice';
 import { actions as channelsActions } from '../../slices/channelsSlice';
 import socket from '../../socket';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const AddModal = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const AddModal = () => {
         dispatch(channelsActions.setCurrentChannelId(data.id));
         setSubmitting(false);
       });
+      toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));
     },
   });

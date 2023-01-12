@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from '../../slices/messagesSlice';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 const Messages = () => {
   const { t } = useTranslation();
+  filter.loadDictionary('ru');
 
   const { channel, id } = useSelector(({ channels }) => {
     const { channelsList, currentChannelId } = channels;
@@ -30,7 +32,7 @@ const Messages = () => {
     <>
       <div className='bg-light mb-4 p-3 shadow-sm small'>
         <p className='m-0'>
-          <b>{currentChannelName}</b>
+          <b>{filter.clean(currentChannelName)}</b>
         </p>
         <span className="text-muted">{t('homepage.message', { count: messages.length })}</span>
       </div>
@@ -39,7 +41,7 @@ const Messages = () => {
           <div className='text-break mb-2' key={id}>
             <b>{username}</b>
             {t('homepage.separator')}
-            {body}
+            {filter.clean(body)}
           </div>
         ))}
         <div ref={messagesBottomRef}></div>

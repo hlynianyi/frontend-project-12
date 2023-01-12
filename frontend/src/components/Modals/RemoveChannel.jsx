@@ -4,6 +4,7 @@ import { actions as modalActions } from '../../slices/modalSlice';
 import { Modal, Button } from 'react-bootstrap';
 import socket from '../../socket';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const RemoveChannel = () => {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ const RemoveChannel = () => {
     socket.emit('removeChannel', { id }, () => {
       setSubmitting(false);
     });
+    toast.success(t('toastify.deleted'));
     dispatch(modalActions.setAction(null));
   };
 

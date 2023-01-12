@@ -9,6 +9,7 @@ import Home from './Home.jsx';
 import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import socket from '../socket.js';
+import 'react-toastify/dist/ReactToastify.css'
 
 const PrivateRoute = () => {
   const isAuth = localStorage.getItem('token');

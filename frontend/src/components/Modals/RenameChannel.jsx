@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import * as yup from 'yup';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const RenameChannel = () => {
       socket.emit('renameChannel', { id, name }, () => {
       setSubmitting(false);
     });
+    toast.success(t('toastify.renamed'));
     dispatch(modalActions.setAction(null));
     }
   });

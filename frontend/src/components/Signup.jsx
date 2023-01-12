@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import signupPicture from '../assets/signup.jpg';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const [signupFailed, setSignupFailed] = useState(false);
@@ -36,19 +37,23 @@ const Signup = () => {
     onSubmit: async ({ username, password }) => {
       try {
         setSubmitting(true);
+
         const response = await axios.post('/api/v1/signup', {username, password});
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', response.data.username);
+
         setSubmitting(false);
         setSignupFailed(false);
+        
         navigate('/');
-      } catch (e){
-        console.log('e :>> ', e);
+      } catch (error){
         setSubmitting(false);
-        // if (e.response.status === 409) {
-        //   return setSignupFailed(true);
-        // }
-        setSignupFailed(true);
+        if (error.message === 'Network Error') {
+          toast.error(t('toastify.network'));
+        };
+        if (error.response.status === 409) {
+          setSignupFailed(true);
+        };
       }
     },
   });
