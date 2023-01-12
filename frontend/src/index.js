@@ -10,9 +10,10 @@ import './i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
-  accessToken: '36a4aa4a006046a5a36347485405cb50',
-  enviroment: 'production',
+  accessToken: '5790453b9cb7441d9130fba46a61f056',
+  environment: 'production',
 };
+
 
 function TestError() {
   const a = null;
@@ -25,12 +26,12 @@ root.render(
   <div className='d-flex flex-column h-100'>
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
+        <TestError />
         <Provider store={store}>
           <App />
           <ModalComponent />
           <ToastContainer />
         </Provider>
-        <TestError />
       </ErrorBoundary>
     </RollbarProvider>
   </div>
