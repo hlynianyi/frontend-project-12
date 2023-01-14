@@ -62,7 +62,7 @@ export default {
     toastify: {
       added: 'Канал создан',
       renamed: 'Канал переименован',
-      deleted: 'Канал удален',
+      deleted: 'Канал удалён',
       network: 'Ошибка соединения',
     }
   },
