@@ -44,7 +44,7 @@ const RenameChannel = () => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
+          <Form.Group controlId="name">
             <Form.Control 
               required
               className="mb-2"
