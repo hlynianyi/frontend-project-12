@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { 
+  BrowserRouter, Route, Routes, Navigate, Outlet 
+} from 'react-router-dom';
 import { actions as messageActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import Login from './Login.jsx';
@@ -9,12 +11,12 @@ import Home from './Home.jsx';
 import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import socket from '../socket.js';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = () => {
   const isAuth = localStorage.getItem('token');
-  return isAuth ? <Outlet /> : <Navigate to="/login"/>
-}
+  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+};
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const App = () => {
     socket.on('removeChannel', (payload) => {
       dispatch(channelsActions.removeChannel(payload));
     });
-  })
+  });
 
   return (
     <BrowserRouter>
@@ -47,6 +49,6 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
