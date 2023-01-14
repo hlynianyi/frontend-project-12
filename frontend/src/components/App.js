@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { 
-  BrowserRouter, Route, Routes, Navigate, Outlet 
+import {
+  BrowserRouter, Route, Routes, Navigate, Outlet,
 } from 'react-router-dom';
 import { actions as messageActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
@@ -43,9 +43,9 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
         </Route>
-        <Route path="*" element={<Error />}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/signup" element={<Signup />}/>
+        <Route path="*" element={<Error /> }/>
+        <Route path="/login" element={<Login /> }/>
+        <Route path="/signup" element={<Signup /> }/>
       </Routes>
     </BrowserRouter>
   );

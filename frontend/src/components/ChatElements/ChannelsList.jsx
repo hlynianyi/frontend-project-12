@@ -1,6 +1,6 @@
 import React from 'react';
-import { 
-  Button, Dropdown, Nav, ButtonGroup 
+import {
+  Button, Dropdown, Nav, ButtonGroup,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -32,12 +32,12 @@ const ChannelsList = () => {
         return (
           <Nav.Item as="li" className="w-100" key={id}>
             {!removable && (
-              <Button 
+              <Button
                 className="w-100 rounded-0 text-start"
                 onClick={() => dispatch(channelsActions.setCurrentChannelId(id))}
-                variant={id === currentChannelId ? "secondary" : ''}
+                variant={id === currentChannelId ? 'secondary' : ''}
               >
-                <span className='me-1'>{t('homepage.channelSign')}</span>
+                <span className="me-1">{t('homepage.channelSign')}</span>
                 {name}
               </Button>
             )}
@@ -66,7 +66,7 @@ const ChannelsList = () => {
             )}
           </Nav.Item>
         );
-      })};
+      })}
     </Nav>
   );
 };

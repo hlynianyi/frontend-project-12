@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { actions as modalsActions } from '../../slices/modalSlice';
 import { useTranslation } from 'react-i18next';
+import { actions as modalsActions } from '../../slices/modalSlice';
 
-function ChannelsTitle() {
+const ChannelsTitle = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   return (
-    <div className='d-flex justify-content-between mb-2 ps-4 pe-2'>
+    <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
       <span>{t('homepage.channels')}</span>
       <Button
         className="p-0 text-primary btn-group-vertical"
@@ -23,7 +23,7 @@ function ChannelsTitle() {
         <span className="visually-hidden">{t('homepage.plus')}</span>
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default ChannelsTitle
+export default ChannelsTitle;
