@@ -46,9 +46,8 @@ const AddModal = () => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
+          <Form.Group controlId="name">
             <Form.Control 
-              required
               className="mb-2"
               id="name" 
               name="name"
@@ -57,7 +56,8 @@ const AddModal = () => {
               onBlur={formik.handleBlur}
               isInvalid={formik.touched.name && formik.errors.name}
             />
-            <Form.Label className="visually-hidden">
+            <Form.Label 
+              className="visually-hidden">
               {t('modals.channelName')}
             </Form.Label>
             <Form.Control.Feedback type='invalid'>{formik.errors.name}</Form.Control.Feedback>
