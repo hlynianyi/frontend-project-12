@@ -3,7 +3,7 @@ export default {
   translation: {
     navbar: {
       title: 'Hexlet Chat',
-      button: 'Выйти'
+      button: 'Выйти',
     },
     login: {
       username: 'Ваш ник',
@@ -64,6 +64,6 @@ export default {
       renamed: 'Канал переименован',
       deleted: 'Канал удалён',
       network: 'Ошибка соединения',
-    }
+    },
   },
 };

@@ -1,7 +1,6 @@
-import { useTranslation } from "react-i18next";
-import { Button, Container, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Button, Container, Navbar } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
@@ -12,17 +11,16 @@ const NavigationBar = () => {
     localStorage.removeItem('user');
     navigate('login');
   };
- 
+
   const isAuth = localStorage.getItem('token') !== null ? true : false;
 
   return (
-    <Navbar bg="white" expand="lg" className ="shadow-sm">
+    <Navbar bg="white" expand="lg" className="shadow-sm">
       <Container>
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {
-          isAuth &&
+        {isAuth &&
           <Button variant="primary" onClick={logOut}>
             {t('navbar.button')}
           </Button>
@@ -30,7 +28,6 @@ const NavigationBar = () => {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default NavigationBar;
- 

@@ -1,21 +1,21 @@
-import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import socket from "../../socket";
-import { actions as modalActions } from '../../slices/modalSlice';
-import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import * as yup from 'yup';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { actions as modalActions } from '../../slices/modalSlice';
+import socket from "../../socket";
 
 const RenameChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const id = useSelector((({ modals })=> modals.handledChannelId));
+  const id = useSelector((({ modals }) => modals.handledChannelId));
   const [isSubmitting, setSubmitting] = useState(false);
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
-    .map(({ name}) => name);
+    .map(({ name }) => name);
 
   const formik = useFormik({
     initialValues: {
@@ -25,13 +25,13 @@ const RenameChannel = () => {
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
     onSubmit: ({ name }) => {
-      setSubmitting(true);
-      socket.emit('renameChannel', { id, name }, () => {
-      setSubmitting(false);
+        setSubmitting(true);
+        socket.emit('renameChannel', { id, name }, () => {
+        setSubmitting(false);
     });
-    toast.success(t('toastify.renamed'));
-    dispatch(modalActions.setAction(null));
-    }
+      toast.success(t('toastify.renamed'));
+      dispatch(modalActions.setAction(null));
+    },
   });
 
   const inputRef = useRef();
@@ -45,7 +45,7 @@ const RenameChannel = () => {
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="name">
-            <Form.Control 
+            <Form.Control
               required
               className="mb-2"
               id="name"
@@ -53,10 +53,10 @@ const RenameChannel = () => {
               ref={inputRef}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isInvalid={ formik.errors.name}
+              isInvalid={formik.errors.name}
             />
             <Form.Label className="visually-hidden">{t('modals.channelName')}</Form.Label>
-            <Form.Control.Feedback type='invalid'>{formik.errors.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" className="me-2" onClick={() => dispatch(modalActions.setAction(null))}>{t('modals.cancel')}</Button>
               <Button type="submit" disabled={isSubmitting}>{t('modals.send')}</Button>

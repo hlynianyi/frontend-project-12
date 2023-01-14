@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
-import { useRef } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Form, FloatingLabel, Button, } from 'react-bootstrap';
+import { useRef, useState, useEffect } from 'react';
+import { Form, FloatingLabel, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import signupPicture from '../assets/signup.jpg';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import signupPicture from '../assets/signup.jpg';
 import routes from '../routes';
 
 const Signup = () => {
@@ -27,7 +25,7 @@ const Signup = () => {
       username: yup.string()
         .min(3, t('errors.loginLength'))
         .max(20, t('errors.loginLength'))
-        .required(t('errors.required')),        
+        .required(t('errors.required')),
       password: yup.string()
         .min(6, t('errors.passwordLength'))
         .required(t('errors.required')),     
@@ -47,20 +45,20 @@ const Signup = () => {
         setSignupFailed(false);
         
         navigate('/');
-      } catch (error){
+      } catch (error) {
         setSubmitting(false);
         if (error.message === 'Network Error') {
           toast.error(t('toastify.network'));
-        };
+        }
         if (error.response.status === 409) {
           setSignupFailed(true);
-        };
-      }
+        }
+      };
     },
   });
 
   const inputRef = useRef();
-    useEffect(() => {
+  useEffect(() => {
     inputRef.current.focus();
   }, []);
 
@@ -76,7 +74,7 @@ const Signup = () => {
               <Form onSubmit={formik.handleSubmit} className='w-50'>
                 <h1 className='text-center mb-4'>{t('signup.title')}</h1>
                 <FloatingLabel
-                  controlId='username'
+                  controlId="username"
                   label={t('signup.username')}
                   className="mb-3">
                   <Form.Control
@@ -89,13 +87,14 @@ const Signup = () => {
                     name="username"
                     autoComplete="username"
                     isInvalid={signupFailed || formik.errors.username}
-                    disabled={formik.isSubmitting} />
+                    disabled={formik.isSubmitting} 
+                  />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel
-                  controlId='password'
+                  controlId="password"
                   label={t('signup.password')}
                   className='mb-3'>
                   <Form.Control
@@ -104,31 +103,34 @@ const Signup = () => {
                     name="password"
                     autoComplete="new-password"
                     type='password'
-                    aria-describedby='passwordHelpBlock'
+                    aria-describedby="passwordHelpBlock"
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
                     isInvalid={signupFailed || formik.errors.password}
-                    disabled={formik.isSubmitting} />
+                    disabled={formik.isSubmitting}
+                  />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel
-                  controlId='confirmPassword'
+                  controlId="confirmPassword"
                   label={t('signup.passwordConfirmation')}
-                  className='mb-4' >
+                  className="mb-4"
+                >
                   <Form.Control
                     required
                     placeholder={t('signup.passwordConfirmation')}
                     name="confirmPassword"
                     autoComplete="new-password"
-                    type='password'
+                    type="password"
                     onChange={formik.handleChange}
                     value={formik.values.confirmPassword}
                     onBlur={formik.handleBlur}
                     isInvalid={signupFailed || formik.errors.confirmPassword}
-                    disabled={formik.isSubmitting} />
+                    disabled={formik.isSubmitting}
+                  />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.confirmPassword || t('errors.userExist')}
                   </Form.Control.Feedback>
@@ -137,7 +139,8 @@ const Signup = () => {
                   type="submit"
                   className="w-100 mb-3"
                   variant="outline-primary"
-                  disabled={isSubmitting} >
+                  disabled={isSubmitting}
+                >
                   {t('signup.toRegister')}
                 </Button>
               </Form>

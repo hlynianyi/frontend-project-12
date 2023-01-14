@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import loginPicture from '../assets/login.jpg';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, FloatingLabel, Button, } from 'react-bootstrap';
+import { Form, FloatingLabel, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import loginPicture from '../assets/login.jpg';
 import routes from '../routes';
 
 const Login = () => {
@@ -30,16 +30,16 @@ const Login = () => {
         setAuthFailed(false);
         setSubmitting(false);
 
-        navigate('/')
-      } catch (error){
+        navigate('/');
+      } catch (error) {
         setSubmitting(false);
         if (error.message === 'Network Error') {
           toast.error(t('toastify.network'));
-        };
+        }
         if (error.response.status === 401) {
           setAuthFailed(true);
-        };
-      };
+        }
+      }
     },
   });
 
@@ -50,21 +50,22 @@ const Login = () => {
 
   return (
     <div className="container-fuild h-100">
-      <div className='row justify-content-center align-content-center h-100'>
-        <div className='col-12 col-md-8 col-xxl-6'>
-          <div className='card shadow-sm'>
-            <div className='card-body row p-5'>
-              <div className='col-12 col-md-6 d-flex align-items-center justify-content-center'>
-                <img src={loginPicture} className='rounded-circle' alt="Войти"/>
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
+          <div className="card shadow-sm">
+            <div className="card-body row p-5">
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src={loginPicture} className="rounded-circle" alt="Войти" />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">
                   {t('login.entry')}
                 </h1>
                 <FloatingLabel
-                  controlId='username'
+                  controlId="username"
                   label={t('login.username')}
-                  className="mb-3">
+                  className="mb-3"
+                >
                   <Form.Control
                     required
                     ref={inputRef}
@@ -75,13 +76,14 @@ const Login = () => {
                     name="username"
                     autoComplete="username"
                     isInvalid={authFailed}
-                    disabled={formik.isSubmitting}/>
+                    disabled={formik.isSubmitting}
+                  />
                 </FloatingLabel>
                 <FloatingLabel
-                  controlId='password'
+                  controlId="password"
                   label={t('login.password')}
-                  className='mb-4'>
-                  <Form.Control 
+                  className="mb-4">
+                  <Form.Control
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
@@ -90,8 +92,9 @@ const Login = () => {
                     autoComplete="password"
                     isInvalid={authFailed}
                     required
-                    disabled={formik.isSubmitting} />
-                  <Form.Control.Feedback type='invalid' tooltip>
+                    disabled={formik.isSubmitting} 
+                  />
+                  <Form.Control.Feedback type="invalid" tooltip>
                     {t('errors.login')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
@@ -109,7 +112,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;
