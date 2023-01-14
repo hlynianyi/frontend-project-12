@@ -28,6 +28,7 @@ export default {
       send: 'Отправить',
       input: 'Введите сообщение..',
       inputAriaLabel: 'Новое сообщение',
+      channelOptions: 'Управление каналом',
       plus: '+',
       separator: ': ',
       message_one: '{{count}} сообщение',
