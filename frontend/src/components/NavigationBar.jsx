@@ -20,9 +20,11 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {isAuth && (<Button variant="primary" onClick={logOut}>
-          {t('navbar.button')}
-        </Button>)}
+        {isAuth &&  (
+          <Button variant="primary" onClick={logOut}>
+            {t('navbar.button')}
+          </Button>
+        )}
       </Container>
     </Navbar>
   );

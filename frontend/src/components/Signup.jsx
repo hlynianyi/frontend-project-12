@@ -31,7 +31,7 @@ const Signup = () => {
         .required(t('errors.required')),
       confirmPassword: yup.string()
         .required(t('errors.required'))
-        .oneOf([yup.ref('password'), null], t('errors.confirmation')),     
+        .oneOf([yup.ref('password'), null], t('errors.confirmation')),
     }),
     onSubmit: async ({ username, password }) => {
       try {
@@ -97,7 +97,8 @@ const Signup = () => {
                 <FloatingLabel
                   controlId="password"
                   label={t('signup.password')}
-                  className="mb-3">
+                  className="mb-3"
+                >
                   <Form.Control
                     required
                     placeholder={t('signup.password')}

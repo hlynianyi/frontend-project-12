@@ -14,6 +14,7 @@ const rollbarConfig = {
   environment: 'production',
 };
 
+
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 
 root.render(
@@ -27,4 +28,5 @@ root.render(
         </Provider>
       </ErrorBoundary>
     </RollbarProvider>
-  </div>);
+  </div>
+  );
