@@ -23,7 +23,7 @@ const Messages = () => {
   const scrollToBottom = () => {
     messagesBottomRef.current?.scrollIntoView({ behavior: 'auto' });
   };
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -37,11 +37,11 @@ const Messages = () => {
         <span className="text-muted">{t('homepage.message', { count: messages.length })}</span>
       </div>
       <div className="chat-messages overflow-auto px-5">
-        {messages.map(({ id, username, body }) => (
-          <div className="text-break mb-2" key={id}>
-            <b>{username}</b>
+        {messages.map((message) => (
+          <div className="text-break mb-2" key={message.id}>
+            <b>{message.username}</b>
             {t('homepage.separator')}
-            {filter.clean(body)}
+            {filter.clean(message.body)}
           </div>
         ))}
         <div ref={messagesBottomRef}></div>

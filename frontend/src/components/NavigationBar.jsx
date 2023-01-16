@@ -12,7 +12,7 @@ const NavigationBar = () => {
     navigate('login');
   };
 
-  const isAuth = localStorage.getItem('token') !== null ? true : false;
+  const isAuth = localStorage.getItem('token');
 
   return (
     <Navbar bg="white" expand="lg" className="shadow-sm">
@@ -20,11 +20,9 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {isAuth &&
-          <Button variant="primary" onClick={logOut}>
-            {t('navbar.button')}
-          </Button>
-        }
+        {isAuth && (<Button variant="primary" onClick={logOut}>
+          {t('navbar.button')}
+        </Button>)}
       </Container>
     </Navbar>
   );

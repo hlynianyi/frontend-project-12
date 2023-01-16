@@ -43,9 +43,9 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
         </Route>
-        <Route path="*" element={<Error /> }/>
-        <Route path="/login" element={<Login /> }/>
-        <Route path="/signup" element={<Signup /> }/>
+        <Route path="*" element={<Error />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

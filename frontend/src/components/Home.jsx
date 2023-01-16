@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
+import { Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 import ChannelsTitle from './ChatElements/ChannelsTitle';
 import ChannelsList from './ChatElements/ChannelsList';
 import Messages from './ChatElements/Messages';
 import InputForm from './ChatElements/InputForm';
-import { Container, Row, Col } from 'react-bootstrap';
-import routes from './../routes';
-import axios from 'axios';
+import routes from '../routes';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
 

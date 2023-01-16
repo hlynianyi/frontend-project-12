@@ -7,7 +7,6 @@ i18n
   .init({
     fallbackLng: 'ru',
     resources,
-
-})
+  });
 
 export default i18n;

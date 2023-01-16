@@ -82,7 +82,8 @@ const Login = () => {
                 <FloatingLabel
                   controlId="password"
                   label={t('login.password')}
-                  className="mb-4">
+                  className="mb-4"
+                >
                   <Form.Control
                     onChange={formik.handleChange}
                     value={formik.values.password}
@@ -92,7 +93,7 @@ const Login = () => {
                     autoComplete="password"
                     isInvalid={authFailed}
                     required
-                    disabled={formik.isSubmitting} 
+                    disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {t('errors.login')}
@@ -102,11 +103,11 @@ const Login = () => {
               </Form>
             </div>
             <div className="card-footer p-4">
-                <div className="text-center">
-                  <span>{t('login.question')}</span>
-                  {t('login.space')}
-                  <Link to="/signup">{t('login.signup')}</Link>
-                </div>
+              <div className="text-center">
+                <span>{t('login.question')}</span>
+                {t('login.space')}
+                <Link to="/signup">{t('login.signup')}</Link>
+              </div>
             </div>
           </div>
         </div>

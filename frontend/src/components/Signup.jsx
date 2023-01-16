@@ -21,14 +21,14 @@ const Signup = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: yup.object({     
+    validationSchema: yup.object({
       username: yup.string()
         .min(3, t('errors.loginLength'))
         .max(20, t('errors.loginLength'))
         .required(t('errors.required')),
       password: yup.string()
         .min(6, t('errors.passwordLength'))
-        .required(t('errors.required')),     
+        .required(t('errors.required')),
       confirmPassword: yup.string()
         .required(t('errors.required'))
         .oneOf([yup.ref('password'), null], t('errors.confirmation')),     
@@ -37,13 +37,13 @@ const Signup = () => {
       try {
         setSubmitting(true);
 
-        const response = await axios.post(routes.signUp(), {username, password});
+        const response = await axios.post(routes.signUp(), { username, password });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', response.data.username);
 
         setSubmitting(false);
         setSignupFailed(false);
-        
+
         navigate('/');
       } catch (error) {
         setSubmitting(false);
@@ -53,7 +53,7 @@ const Signup = () => {
         if (error.response.status === 409) {
           setSignupFailed(true);
         }
-      };
+      }
     },
   });
 
@@ -69,14 +69,15 @@ const Signup = () => {
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img src={signupPicture} alt={t('signup.title')} className="rounded-circle"/>
+                <img src={signupPicture} alt={t('signup.title')} className="rounded-circle" />
               </div>
-              <Form onSubmit={formik.handleSubmit} className='w-50'>
-                <h1 className='text-center mb-4'>{t('signup.title')}</h1>
+              <Form onSubmit={formik.handleSubmit} className="w-50">
+                <h1 className="text-center mb-4">{t('signup.title')}</h1>
                 <FloatingLabel
                   controlId="username"
                   label={t('signup.username')}
-                  className="mb-3">
+                  className="mb-3"
+                >
                   <Form.Control
                     required
                     ref={inputRef}
@@ -87,7 +88,7 @@ const Signup = () => {
                     name="username"
                     autoComplete="username"
                     isInvalid={signupFailed || formik.errors.username}
-                    disabled={formik.isSubmitting} 
+                    disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {formik.errors.username}
@@ -96,13 +97,13 @@ const Signup = () => {
                 <FloatingLabel
                   controlId="password"
                   label={t('signup.password')}
-                  className='mb-3'>
+                  className="mb-3">
                   <Form.Control
                     required
                     placeholder={t('signup.password')}
                     name="password"
                     autoComplete="new-password"
-                    type='password'
+                    type="password"
                     aria-describedby="passwordHelpBlock"
                     onChange={formik.handleChange}
                     value={formik.values.password}

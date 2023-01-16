@@ -20,4 +20,3 @@ const modalSlice = createSlice({
 
 export const { actions } = modalSlice;
 export default modalSlice.reducer;
-
