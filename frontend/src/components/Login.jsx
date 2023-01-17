@@ -7,12 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import loginPicture from '../assets/login.jpg';
 import routes from '../routes';
+import useAuth from '../hooks/index.jsx';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const auth = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -23,13 +25,11 @@ const Login = () => {
       try {
         setSubmitting(true);
 
-        const { data } = await axios.post(routes.login(), values);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', data.username);
+        const response = await axios.post(routes.login(), values);
+        auth.logIn(response.data.token, response.data.username);
 
         setAuthFailed(false);
         setSubmitting(false);
-
         navigate('/');
       } catch (error) {
         setSubmitting(false);

@@ -1,18 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/index.jsx';
 
 const NavigationBar = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('login');
-  };
-
-  const isAuth = localStorage.getItem('token');
+  const auth = useAuth();
 
   return (
     <Navbar bg="white" expand="lg" className="shadow-sm">
@@ -20,8 +14,8 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {isAuth &&  (
-          <Button variant="primary" onClick={logOut}>
+        {auth.loggedIn &&  (
+          <Button variant="primary" as={Link} to="/login" onClick={auth.logOut}>
             {t('navbar.button')}
           </Button>
         )}

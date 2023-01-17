@@ -6,7 +6,7 @@ import { Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice';
-import socket from '../../socket';
+import { socket } from '../../init';
 
 const RenameChannel = () => {
   const { t } = useTranslation();

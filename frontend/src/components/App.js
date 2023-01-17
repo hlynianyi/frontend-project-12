@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   BrowserRouter, Route, Routes, Navigate, Outlet,
@@ -10,12 +10,36 @@ import Signup from './Signup.jsx';
 import Home from './Home.jsx';
 import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
-import socket from '../socket.js';
+import { socket } from '../init';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthContext from '../context/AuthContext';
+import useAuth from '../hooks/index.jsx';
+
+const AuthProvider = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const logIn = (token, username) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', username);
+    setLoggedIn(true);
+  };
+  const logOut = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+  };
+
+  return (
+    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 const PrivateRoute = () => {
-  const isAuth = localStorage.getItem('token');
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+  // const isAuth = localStorage.getItem('token');
+  // return isAuth ? <Outlet /> : <Navigate to="/login" />;
+  const auth = useAuth();
+  return auth.loggedIn ? <Outlet/> : <Navigate to="/login" />;
 };
 
 const App = () => {
@@ -37,17 +61,19 @@ const App = () => {
   });
 
   return (
-    <BrowserRouter>
-      <NavigationBar />
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="*" element={<Error />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <NavigationBar />
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route path="*" element={<Error />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

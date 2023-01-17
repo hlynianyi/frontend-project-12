@@ -8,12 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import signupPicture from '../assets/signup.jpg';
 import routes from '../routes';
+import useAuth from '../hooks';
 
 const Signup = () => {
   const [signupFailed, setSignupFailed] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -38,9 +40,8 @@ const Signup = () => {
         setSubmitting(true);
 
         const response = await axios.post(routes.signUp(), { username, password });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', response.data.username);
 
+        auth.logIn(response.data.token, response.data.username);
         setSubmitting(false);
         setSignupFailed(false);
 

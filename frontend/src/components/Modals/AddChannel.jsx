@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice';
 import { actions as channelsActions } from '../../slices/channelsSlice';
-import socket from '../../socket';
+import { socket } from '../../init';
 
 const AddModal = () => {
   const { t } = useTranslation();

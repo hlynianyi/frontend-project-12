@@ -4,7 +4,7 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import socket from '../../socket';
+import { socket } from '../../init';
 
 const InputForm = () => {
   const { t } = useTranslation();
