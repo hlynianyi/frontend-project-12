@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Container, Navbar } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useAuth from '../hooks/index.jsx';
 
 const NavigationBar = () => {
@@ -14,7 +14,7 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {auth.loggedIn &&  (
+        {auth.loggedIn && (
           <Button variant="primary" as={Link} to="/login" onClick={auth.logOut}>
             {t('navbar.button')}
           </Button>

@@ -44,7 +44,7 @@ const Messages = () => {
             {filter.clean(message.body)}
           </div>
         ))}
-        <div ref={messagesBottomRef}></div>
+        <div ref={messagesBottomRef} />
       </div>
     </>
   );

@@ -5,8 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import resources from './locales/index';
 import io from 'socket.io-client';
+import resources from './locales/index';
 import App from './components/App';
 import store from './slices/index';
 import ModalComponent from './components/Modals/ModalComponent';
@@ -39,5 +39,5 @@ export default () => {
         </ErrorBoundary>
       </RollbarProvider>
     </div>
-    );
+  );
 };
