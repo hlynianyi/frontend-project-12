@@ -21,7 +21,7 @@ export default () => {
   });
 
   const rollbarConfig = {
-    accessToken: '57f43b9d49b640e2a3e47f9c2e67e1fe',
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
     environment: 'production',
   };
 
@@ -38,6 +38,6 @@ export default () => {
           </Provider>
         </ErrorBoundary>
       </RollbarProvider>
-    </div>
+    </div>,
   );
 };
