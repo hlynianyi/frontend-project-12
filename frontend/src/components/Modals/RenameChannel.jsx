@@ -47,7 +47,6 @@ const RenameChannel = () => {
             <Form.Control
               required
               className="mb-2"
-              id="name"
               name="name"
               ref={inputRef}
               onChange={formik.handleChange}
