@@ -12,7 +12,7 @@ import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import { socket } from '../init';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../context/AuthContext.js';
 import useAuth from '../hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
@@ -36,8 +36,6 @@ const AuthProvider = ({ children }) => {
 };
 
 const PrivateRoute = () => {
-  // const isAuth = localStorage.getItem('token');
-  // return isAuth ? <Outlet /> : <Navigate to="/login" />;
   const auth = useAuth();
   return auth.loggedIn ? <Outlet/> : <Navigate to="/login" />;
 };
