@@ -1,43 +1,68 @@
-/* eslint-disable import/no-anonymous-default-export */
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import io from 'socket.io-client';
 import resources from './locales/index';
-import App from './components/App';
-import store from './slices/index';
+import Router from './components/Router';
 import ModalComponent from './components/Modals/ModalComponent';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthProvider from './context/AuthProvider';
+import SocketContext from './context/SocketContext';
+import { actions as messageActions } from './slices/messagesSlice';
+import { actions as channelsActions } from './slices/channelsSlice';
 
-export const socket = new io();
-
-export default () => {
-  i18n.use(initReactI18next).init({
-    fallbackLng: 'ru',
-    resources,
-  });
+const App = () => {
+  const dispatch = useDispatch();
+  const socket = new io();
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
     environment: 'production',
   };
 
-  const root = ReactDOM.createRoot(document.getElementById('chat'));
+  i18n.use(initReactI18next).init({
+    fallbackLng: 'ru',
+    resources,
+  });
 
-  root.render(
-    <div className="d-flex flex-column h-100">
-      <RollbarProvider config={rollbarConfig}>
-        <ErrorBoundary>
-          <Provider store={store}>
-            <App />
-            <ModalComponent />
-            <ToastContainer />
-          </Provider>
-        </ErrorBoundary>
-      </RollbarProvider>
-    </div>,
+  socket.on('newMessage', (payload) => {
+    dispatch(messageActions.addMessage(payload));
+  });
+  socket.on('newChannel', (payload) => {
+    dispatch(channelsActions.addChannel(payload));
+  });
+  socket.on('renameChannel', (payload) => {
+    dispatch(channelsActions.renameChannel(payload));
+  });
+  socket.on('removeChannel', (payload) => {
+    dispatch(channelsActions.removeChannel(payload));
+  });
+
+  const socketApi = {
+    newMessage: (...args) => socket.emit('newMessage', ...args),
+    newChannel: (name) => {
+      socket.emit('newChannel', { name }, ({ data }) => {
+        dispatch(channelsActions.setCurrentChannelId(data.id));
+      });
+    },
+    removeChannel: (id) => socket.emit('removeChannel', { id }),
+    renameChannel: (id, name) => socket.emit('renameChannel', { id, name }),
+  };
+
+  return (
+    <RollbarProvider config={rollbarConfig}>
+      <AuthProvider>
+        <SocketContext.Provider value={socketApi}>
+          <Router />
+          <ModalComponent />
+          <ToastContainer />
+        </SocketContext.Provider>
+      </AuthProvider>
+    </RollbarProvider>
   );
 };
+
+export default App;

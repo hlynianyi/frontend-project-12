@@ -6,15 +6,20 @@ import { Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice';
-import { actions as channelsActions } from '../../slices/channelsSlice';
-import { socket } from '../../init';
+import { useSocket } from '../../hooks/index';
 
 const AddModal = () => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
+
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
+
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const socketApi = useSocket();
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -24,11 +29,9 @@ const AddModal = () => {
     }),
     onSubmit: ({ name }) => {
       setSubmitting(true);
-      socket.emit('newChannel', { name }, (response) => {
-        const { data } = response;
-        dispatch(channelsActions.setCurrentChannelId(data.id));
-        setSubmitting(false);
-      });
+      socketApi.newChannel(name);
+      setSubmitting(false);
+
       toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));
     },
@@ -49,7 +52,6 @@ const AddModal = () => {
           <Form.Group controlId="name">
             <Form.Control
               className="mb-2"
-              id="name"
               name="name"
               ref={inputRef}
               onChange={formik.handleChange}

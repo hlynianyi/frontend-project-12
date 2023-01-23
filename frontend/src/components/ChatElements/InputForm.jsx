@@ -4,14 +4,18 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { socket } from '../../init';
+import { useSocket } from '../../hooks';
 
 const InputForm = () => {
   const { t } = useTranslation();
 
   const channelId = useSelector(({ channels }) => channels.currentChannelId);
+
   const username = localStorage.getItem('user');
+
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const socketApi = useSocket();
 
   const formik = useFormik({
     initialValues: {
@@ -22,9 +26,9 @@ const InputForm = () => {
     }),
     onSubmit: ({ body }, { resetForm }) => {
       setSubmitting(true);
-      socket.emit('newMessage', { body, channelId, username }, () => {
-        setSubmitting(false);
-      });
+      socketApi.newMessage({ body, channelId, username });
+      setSubmitting(false);
+
       resetForm();
     },
   });

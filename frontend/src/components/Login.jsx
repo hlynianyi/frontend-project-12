@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import loginPicture from '../assets/login.jpg';
 import routes from '../routes';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);

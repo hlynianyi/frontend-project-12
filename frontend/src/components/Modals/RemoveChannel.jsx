@@ -4,19 +4,24 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice';
-import { socket } from '../../init';
+import { useSocket } from '../../hooks';
 
 const RemoveChannel = () => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
+
   const id = useSelector((({ modals }) => modals.handledChannelId));
+
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const socketApi = useSocket();
 
   const submit = () => {
     setSubmitting(true);
-    socket.emit('removeChannel', { id }, () => {
-      setSubmitting(false);
-    });
+    socketApi.removeChannel(id);
+    setSubmitting(false);
+
     toast.success(t('toastify.deleted'));
     dispatch(modalActions.setAction(null));
   };

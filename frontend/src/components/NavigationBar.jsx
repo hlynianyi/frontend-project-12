@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const NavigationBar = () => {
   const { t } = useTranslation();

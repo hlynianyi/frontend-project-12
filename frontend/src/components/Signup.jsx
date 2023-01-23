@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import signupPicture from '../assets/signup.jpg';
 import routes from '../routes';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 
 const Signup = () => {
   const [signupFailed, setSignupFailed] = useState(false);

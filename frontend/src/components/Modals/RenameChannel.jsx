@@ -6,15 +6,21 @@ import { Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { actions as modalActions } from '../../slices/modalSlice';
-import { socket } from '../../init';
+import { useSocket } from '../../hooks';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
+
   const id = useSelector((({ modals }) => modals.handledChannelId));
+
   const [isSubmitting, setSubmitting] = useState(false);
+
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
+
+  const socketApi = useSocket();
 
   const formik = useFormik({
     initialValues: {
@@ -25,9 +31,9 @@ const RenameChannel = () => {
     }),
     onSubmit: ({ name }) => {
       setSubmitting(true);
-      socket.emit('renameChannel', { id, name }, () => {
-        setSubmitting(false);
-      });
+      socketApi.renameChannel(id, name);
+      setSubmitting(false);
+
       toast.success(t('toastify.renamed'));
       dispatch(modalActions.setAction(null));
     },
