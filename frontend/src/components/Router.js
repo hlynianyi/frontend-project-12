@@ -15,20 +15,18 @@ const PrivateRoute = () => {
   return auth.loggedIn ? <Outlet /> : <Navigate to="/login" />;
 };
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <NavigationBar />
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="*" element={<Error />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+const Router = () => (
+  <BrowserRouter>
+    <NavigationBar />
+    <Routes>
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route path="*" element={<Error />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default Router;

@@ -16,7 +16,7 @@ import { actions as channelsActions } from './slices/channelsSlice';
 
 const App = () => {
   const dispatch = useDispatch();
-  const socket = new io();
+  const socket = io();
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
@@ -54,13 +54,15 @@ const App = () => {
 
   return (
     <RollbarProvider config={rollbarConfig}>
-      <AuthProvider>
-        <SocketContext.Provider value={socketApi}>
-          <Router />
-          <ModalComponent />
-          <ToastContainer />
-        </SocketContext.Provider>
-      </AuthProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <SocketContext.Provider value={socketApi}>
+            <Router />
+            <ModalComponent />
+            <ToastContainer />
+          </SocketContext.Provider>
+        </AuthProvider>
+      </ErrorBoundary>
     </RollbarProvider>
   );
 };
