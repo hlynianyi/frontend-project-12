@@ -11,7 +11,6 @@ import { useAuth } from '../hooks/index.jsx';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
-  const [isSubmitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const auth = useAuth();
@@ -21,25 +20,26 @@ const Login = () => {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, actions) => {
       try {
-        setSubmitting(true);
-
+        actions.setSubmitting(true);
         const response = await axios.post(routes.login(), values);
         auth.logIn(response.data.token, response.data.username);
 
         setAuthFailed(false);
-        setSubmitting(false);
+        actions.setSubmitting(false);
+
         navigate('/');
       } catch (error) {
-        setSubmitting(false);
-        if (error.message === 'Network Error') {
-          toast.error(t('toastify.network'));
-        }
-        if (error.response.status === 401) {
+        actions.setSubmitting(false);
+        if (error.response?.status === 401) {
           setAuthFailed(true);
+        } else if (error.message === 'Network Error') {
+          toast.error(t('toastify.network'));
+        } else {
+          toast.error(t('toastify.unknown'));
         }
-      }
+      };
     },
   });
 
@@ -99,7 +99,12 @@ const Login = () => {
                     {t('errors.login')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button className="w-100 mb-3" type="submit" disabled={isSubmitting} variant="outline-primary">{t('login.entry')}</Button>
+                <Button
+                  className="w-100 mb-3"
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                  variant="outline-primary">{t('login.entry')}
+                </Button>
               </Form>
             </div>
             <div className="card-footer p-4">

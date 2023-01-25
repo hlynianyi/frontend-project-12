@@ -11,8 +11,7 @@ import routes from '../routes';
 import { useAuth } from '../hooks';
 
 const Signup = () => {
-  const [signupFailed, setSignupFailed] = useState(false);
-  const [isSubmitting, setSubmitting] = useState(false);
+  const [code409Detected, setCode409Detected] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const auth = useAuth();
@@ -35,26 +34,27 @@ const Signup = () => {
         .required(t('errors.required'))
         .oneOf([yup.ref('password'), null], t('errors.confirmation')),
     }),
-    onSubmit: async ({ username, password }) => {
+    onSubmit: async ({ username, password }, actions) => {
       try {
-        setSubmitting(true);
-
+        actions.setSubmitting(true);
         const response = await axios.post(routes.signUp(), { username, password });
-
         auth.logIn(response.data.token, response.data.username);
-        setSubmitting(false);
-        setSignupFailed(false);
+
+        setCode409Detected(false);
+        actions.setSubmitting(false);
 
         navigate('/');
       } catch (error) {
-        setSubmitting(false);
-        if (error.message === 'Network Error') {
+        actions.setSubmitting(false);
+
+        if (error.response?.status === 409) {
+          setCode409Detected(true);
+        } else if (error.message === 'Network Error') {
           toast.error(t('toastify.network'));
+        } else {
+          toast.error(t('toastify.unknown'));
         }
-        if (error.response.status === 409) {
-          setSignupFailed(true);
-        }
-      }
+      };
     },
   });
 
@@ -88,7 +88,7 @@ const Signup = () => {
                     placeholder={t('signup.username')}
                     name="username"
                     autoComplete="username"
-                    isInvalid={signupFailed || formik.errors.username}
+                    isInvalid={code409Detected || formik.errors.username}
                     disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
@@ -110,7 +110,7 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
-                    isInvalid={signupFailed || formik.errors.password}
+                    isInvalid={code409Detected || formik.errors.password}
                     disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
@@ -131,7 +131,7 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     value={formik.values.confirmPassword}
                     onBlur={formik.handleBlur}
-                    isInvalid={signupFailed || formik.errors.confirmPassword}
+                    isInvalid={code409Detected || formik.errors.confirmPassword}
                     disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
@@ -142,7 +142,7 @@ const Signup = () => {
                   type="submit"
                   className="w-100 mb-3"
                   variant="outline-primary"
-                  disabled={isSubmitting}
+                  disabled={formik.isSubmitting}
                 >
                   {t('signup.toRegister')}
                 </Button>

@@ -16,8 +16,6 @@ const AddModal = () => {
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
 
-  const [isSubmitting, setSubmitting] = useState(false);
-
   const socketApi = useSocket();
 
   const formik = useFormik({
@@ -27,10 +25,10 @@ const AddModal = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: ({ name }) => {
-      setSubmitting(true);
+    onSubmit: ({ name }, actions) => {
+      actions.setSubmitting(true);
       socketApi.newChannel(name);
-      setSubmitting(false);
+      actions.setSubmitting(false);
 
       toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));
@@ -66,7 +64,7 @@ const AddModal = () => {
             <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" className="me-2" onClick={() => dispatch(modalActions.setAction(null))}>{t('modals.cancel')}</Button>
-              <Button type="submit" disabled={isSubmitting}>{t('modals.send')}</Button>
+              <Button type="submit" disabled={formik.isSubmitting}>{t('modals.send')}</Button>
             </div>
           </Form.Group>
         </Form>

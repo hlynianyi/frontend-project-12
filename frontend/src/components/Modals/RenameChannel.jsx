@@ -15,8 +15,6 @@ const RenameChannel = () => {
 
   const id = useSelector((({ modals }) => modals.handledChannelId));
 
-  const [isSubmitting, setSubmitting] = useState(false);
-
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
 
@@ -29,10 +27,10 @@ const RenameChannel = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: ({ name }) => {
-      setSubmitting(true);
+    onSubmit: ({ name }, actions) => {
+      actions.setSubmitting(true);
       socketApi.renameChannel(id, name);
-      setSubmitting(false);
+      actions.setSubmitting(false);
 
       toast.success(t('toastify.renamed'));
       dispatch(modalActions.setAction(null));
@@ -63,7 +61,7 @@ const RenameChannel = () => {
             <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" className="me-2" onClick={() => dispatch(modalActions.setAction(null))}>{t('modals.cancel')}</Button>
-              <Button type="submit" disabled={isSubmitting}>{t('modals.send')}</Button>
+              <Button type="submit" disabled={formik.isSubmitting}>{t('modals.send')}</Button>
             </div>
           </Form.Group>
         </Form>

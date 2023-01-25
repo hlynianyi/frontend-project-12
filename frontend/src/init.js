@@ -42,14 +42,28 @@ const App = () => {
   });
 
   const socketApi = {
-    newMessage: (...args) => socket.emit('newMessage', ...args),
+    newMessage: (...args) => socket.emit('newMessage', ...args, (response) => {
+      if (response.status === 'ok') {
+        return response.status;
+      }
+    }),
     newChannel: (name) => {
-      socket.emit('newChannel', { name }, ({ data }) => {
-        dispatch(channelsActions.setCurrentChannelId(data.id));
+      socket.emit('newChannel', { name }, (response) => {
+        if (response.status === 'ok') {
+          dispatch(channelsActions.setCurrentChannelId(response.data.id));
+        }
       });
     },
-    removeChannel: (id) => socket.emit('removeChannel', { id }),
-    renameChannel: (id, name) => socket.emit('renameChannel', { id, name }),
+    removeChannel: (id) => socket.emit('removeChannel', { id }, (response) => {
+      if (response.status === 'ok') {
+        return response.status;
+      }
+    }),
+    renameChannel: (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
+      if (response.status === 'ok') {
+        return response.status;
+      }
+    }),
   };
 
   return (
