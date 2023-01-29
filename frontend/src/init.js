@@ -26,7 +26,6 @@ const rollbarConfig = {
 };
 
 
-
 const App = () => {
   const dispatch = useDispatch();
   const socket = io();
@@ -46,7 +45,6 @@ const App = () => {
 
   const promisifyEmit = (socket, event) => (...args) => {
     return new Promise((resolve, reject) => {
-      console.log('args', args);
       switch (event) {
         case 'newMessage': {
           socket.emit(event, ...args, (response) => {
@@ -106,23 +104,6 @@ const App = () => {
     newChannel: promisifyEmit(socket, 'newChannel'),
     removeChannel: promisifyEmit(socket, 'removeChannel'),
     renameChannel: promisifyEmit(socket, 'renameChannel'),
-    // newChannel: (name) => {
-    //   socket.emit('newChannel', { name }, (response) => {
-    //     if (response.status === 'ok') {
-    //       dispatch(channelsActions.setCurrentChannelId(response.data.id));
-    //     }
-    //   });
-    // },
-    // removeChannel: (id) => socket.emit('removeChannel', { id }, (response) => {
-    //   if (response.status === 'ok') {
-    //     return response.status;
-    //   }
-    // }),
-    // renameChannel: (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
-    //   if (response.status === 'ok') {
-    //     return response.status;
-    //   }
-    // }),
   };
 
   return (

@@ -24,7 +24,6 @@ const InputForm = () => {
     onSubmit: async ({ body }, { setSubmitting, resetForm }) => {
       setSubmitting(true);
 
-      console.log('blocked');
       await socketApi.newMessage({ body, channelId, username })
         .then(() => {
           setSubmitting(false);
@@ -32,8 +31,6 @@ const InputForm = () => {
         .catch((error) => {
           console.error(error);
         });
-
-      console.log('unblocked');
 
       resetForm();
     },

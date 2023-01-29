@@ -20,7 +20,6 @@ const RemoveChannel = () => {
   const submit = async () => {
     setSubmitting(true);
 
-    console.log('blocked');
     await socketApi.removeChannel({ id })
       .then(() => {
         setSubmitting(false);
@@ -28,8 +27,6 @@ const RemoveChannel = () => {
       .catch((error) => {
         console.error(error);
       });
-
-    console.log('unblocked');
 
     toast.success(t('toastify.deleted'));
     dispatch(modalActions.setAction(null));

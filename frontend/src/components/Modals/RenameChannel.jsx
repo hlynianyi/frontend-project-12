@@ -30,7 +30,6 @@ const RenameChannel = () => {
     onSubmit: async ({ name }, actions) => {
       actions.setSubmitting(true);
 
-      console.log('blocked');
       await socketApi.renameChannel({ id, name})
         .then(() => {
           actions.setSubmitting(false);
@@ -38,10 +37,6 @@ const RenameChannel = () => {
         .catch((error) => {
           console.error(error);
         });
-
-      console.log('unblocked');
-      // socketApi.renameChannel(id, name);
-      // actions.setSubmitting(false);
 
       toast.success(t('toastify.renamed'));
       dispatch(modalActions.setAction(null));

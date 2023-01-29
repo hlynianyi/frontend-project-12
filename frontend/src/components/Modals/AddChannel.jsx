@@ -25,7 +25,6 @@ const AddModal = () => {
     onSubmit: async ({ name }, actions) => {
       actions.setSubmitting(true);
 
-      console.log('blocked');
       await socketApi.newChannel({ name })
         .then(() => {
           actions.setSubmitting(false);
@@ -34,28 +33,8 @@ const AddModal = () => {
           console.error(error);
         });
 
-      console.log('unblocked');
-
       toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));
-      // try {
-      //   actions.setSubmitting(true);
-
-      //   await socketApi.newChannel().then()
-        
-      //   // socketApi.newChannel(name);
-      //   actions.setSubmitting(false);
-
-      //   toast.success(t('toastify.added'));
-      //   dispatch(modalActions.setAction(null));
-      // } catch (error) {
-      //   console.log('error :>> ', error);
-      //   if (error.message === 'Network Error') {
-      //     toast.error(t('toastify.network'));
-      //   } else {
-      //     toast.error(t('toastify.unknown'));
-      //   }
-      // }
     },
   });
 
