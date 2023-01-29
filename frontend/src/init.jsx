@@ -12,17 +12,17 @@ import { actions as channelsActions } from './slices/channelsSlice';
 
 const init = async () => {
   const i18n = i18next.createInstance();
-  
+
   await i18n.use(initReactI18next).init({
     fallbackLng: 'ru',
     resources,
   });
-  
+
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
     environment: 'production',
   };
-  
+
   const socket = io();
 
   socket.on('newMessage', (payload) => {
@@ -37,12 +37,11 @@ const init = async () => {
   socket.on('removeChannel', (payload) => {
     store.dispatch(channelsActions.removeChannel(payload));
   });
-  
-  
+
   const promisifyEmit = (fn) => (...args) => new Promise((resolve, reject) => {
     fn(...args, (response) => {
       if (response.status === 'ok') {
-          resolve(response.status);
+        resolve(response.status);
       } else {
         reject(response);
       }
