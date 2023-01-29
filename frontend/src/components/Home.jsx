@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchInitData = async () => {
       try {
-        const token = auth.token;
+        const { token } = auth;
         const response = await axios.get(routes.data(), { headers: { Authorization: `Bearer ${token}` } });
         const { channels, messages, currentChannelId } = response.data;
         dispatch(channelsActions.addChannels(channels));

@@ -14,7 +14,6 @@ import SocketContext from './context/SocketContext';
 import { actions as messageActions } from './slices/messagesSlice';
 import { actions as channelsActions } from './slices/channelsSlice';
 
-
 i18n.use(initReactI18next).init({
   fallbackLng: 'ru',
   resources,
@@ -24,7 +23,6 @@ const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
   environment: 'production',
 };
-
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,7 +41,7 @@ const App = () => {
     dispatch(channelsActions.removeChannel(payload));
   });
 
-  const promisifyEmit = (socket, event) => (...args) => {
+  const promisifyEmit = (event) => (...args) => {
     return new Promise((resolve, reject) => {
       switch (event) {
         case 'newMessage': {
@@ -73,8 +71,8 @@ const App = () => {
           const extract = args[0];
           const { id, name } = extract;
           socket.emit('renameChannel', { id, name }, (response) => {
-              if (response.status === 'ok') {
-                resolve(response.status);
+            if (response.status === 'ok') {
+              resolve(response.status);
             } else {
               reject(response);
             }
@@ -100,10 +98,10 @@ const App = () => {
   };
 
   const socketApi = {
-    newMessage: promisifyEmit(socket, 'newMessage'),
-    newChannel: promisifyEmit(socket, 'newChannel'),
-    removeChannel: promisifyEmit(socket, 'removeChannel'),
-    renameChannel: promisifyEmit(socket, 'renameChannel'),
+    newMessage: promisifyEmit('newMessage'),
+    newChannel: promisifyEmit('newChannel'),
+    removeChannel: promisifyEmit('removeChannel'),
+    renameChannel: promisifyEmit('renameChannel'),
   };
 
   return (

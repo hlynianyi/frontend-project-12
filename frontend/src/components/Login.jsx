@@ -39,7 +39,7 @@ const Login = () => {
         } else {
           toast.error(t('toastify.unknown'));
         }
-      };
+      }
     },
   });
 
@@ -103,7 +103,9 @@ const Login = () => {
                   className="w-100 mb-3"
                   type="submit"
                   disabled={formik.isSubmitting}
-                  variant="outline-primary">{t('login.entry')}
+                  variant="outline-primary"
+                >
+                  {t('login.entry')}
                 </Button>
               </Form>
             </div>

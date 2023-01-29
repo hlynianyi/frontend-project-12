@@ -8,14 +8,10 @@ import { useSocket } from '../../hooks';
 
 const RemoveChannel = () => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-
   const socketApi = useSocket();
-
-  const id = useSelector((({ modals }) => modals.handledChannelId));
-
   const [isSubmitting, setSubmitting] = useState(false);
+  const id = useSelector((({ modals }) => modals.handledChannelId));
 
   const submit = async () => {
     setSubmitting(true);

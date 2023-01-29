@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import AuthContext from './AuthContext';
 
-// todo: убрать обращение к localStorage везде кроме AuthProvider
 const AuthProvider = ({ children }) => {
   const user = localStorage.getItem('user');
   const token = localStorage.getItem('token');
 
-  const [loggedIn, setLoggedIn] = useState(user ? true : false);
+  const [loggedIn, setLoggedIn] = useState(user);
 
-  const logIn = (token, username) => {
-    localStorage.setItem('token', token);
+  const logIn = (tkn, username) => {
+    localStorage.setItem('token', tkn);
     localStorage.setItem('user', username);
     setLoggedIn(true);
   };
@@ -21,7 +20,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut, user, token }}>
+    <AuthContext.Provider value={
+      { loggedIn, logIn, logOut, user, token }
+    }>
       {children}
     </AuthContext.Provider>
   );

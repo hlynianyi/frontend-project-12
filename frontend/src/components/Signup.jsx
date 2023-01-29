@@ -54,7 +54,7 @@ const Signup = () => {
         } else {
           toast.error(t('toastify.unknown'));
         }
-      };
+      }
     },
   });
 

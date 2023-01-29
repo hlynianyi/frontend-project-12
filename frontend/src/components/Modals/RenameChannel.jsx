@@ -10,15 +10,11 @@ import { useSocket } from '../../hooks';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-
+  const socketApi = useSocket();
   const id = useSelector((({ modals }) => modals.handledChannelId));
-
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
-
-  const socketApi = useSocket();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +26,7 @@ const RenameChannel = () => {
     onSubmit: async ({ name }, actions) => {
       actions.setSubmitting(true);
 
-      await socketApi.renameChannel({ id, name})
+      await socketApi.renameChannel({ id, name })
         .then(() => {
           actions.setSubmitting(false);
         })
