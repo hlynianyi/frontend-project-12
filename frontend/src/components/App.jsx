@@ -1,28 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import io from 'socket.io-client';
-import resources from './locales/index';
-import Router from './components/Router';
-import ModalComponent from './components/Modals/ModalComponent';
+import Router from './Router';
+import ModalComponent from './Modals/ModalComponent';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthProvider from './context/AuthProvider';
-import SocketContext from './context/SocketContext';
-import { actions as messageActions } from './slices/messagesSlice';
-import { actions as channelsActions } from './slices/channelsSlice';
-
-i18n.use(initReactI18next).init({
-  fallbackLng: 'ru',
-  resources,
-});
-
-const rollbarConfig = {
-  accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-  environment: 'production',
-};
+import AuthProvider from '../context/AuthProvider';
+import SocketContext from '../context/SocketContext';
+import { actions as messageActions } from '../slices/messagesSlice';
+import { actions as channelsActions } from '../slices/channelsSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -105,17 +91,13 @@ const App = () => {
   };
 
   return (
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
-        <AuthProvider>
-          <SocketContext.Provider value={socketApi}>
-            <Router />
-            <ModalComponent />
-            <ToastContainer />
-          </SocketContext.Provider>
-        </AuthProvider>
-      </ErrorBoundary>
-    </RollbarProvider>
+    <AuthProvider>
+      <SocketContext.Provider value={socketApi}>
+        <Router />
+        <ModalComponent />
+        <ToastContainer />
+      </SocketContext.Provider>
+    </AuthProvider>
   );
 };
 
