@@ -5,14 +5,13 @@ import ModalComponent from './Modals/ModalComponent';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider from '../context/AuthProvider';
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <Router />
-      <ModalComponent />
-      <ToastContainer />
-    </AuthProvider>
-  );
-};
+const App = () => (
+  <AuthProvider>
+    <Router />
+    <ModalComponent />
+    <ToastContainer />
+  </AuthProvider>
+);
+    
 
 export default App;

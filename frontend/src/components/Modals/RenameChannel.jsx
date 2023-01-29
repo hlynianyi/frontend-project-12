@@ -23,7 +23,7 @@ const RenameChannel = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: async ({ name }, actions) => {
+    onSubmit: async ({ name }) => {
       await socketApi.renameChannel({ id, name });
 
       toast.success(t('toastify.renamed'));

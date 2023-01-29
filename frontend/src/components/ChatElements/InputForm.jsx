@@ -22,7 +22,7 @@ const InputForm = () => {
       body: yup.string().required(),
     }),
     onSubmit: async ({ body }, { resetForm }) => {
-      await socketApi.newMessage({ body, channelId, username })
+      await socketApi.newMessage({ body, channelId, username });
 
       resetForm();
     },

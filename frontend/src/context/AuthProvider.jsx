@@ -5,10 +5,10 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const token = localStorage.getItem('token');
 
-  const logIn = (token, username) => {
-    localStorage.setItem('user', JSON.stringify(username));
-    localStorage.setItem('token', token);
-    setUser(username);
+  const logIn = (userToken, userName) => {
+    localStorage.setItem('user', JSON.stringify(userName));
+    localStorage.setItem('token', userToken);
+    setUser(userName);
   };
 
   const logOut = () => {
