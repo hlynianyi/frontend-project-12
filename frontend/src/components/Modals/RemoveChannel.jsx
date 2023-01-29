@@ -11,16 +11,25 @@ const RemoveChannel = () => {
 
   const dispatch = useDispatch();
 
+  const socketApi = useSocket();
+
   const id = useSelector((({ modals }) => modals.handledChannelId));
 
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const socketApi = useSocket();
-
-  const submit = () => {
+  const submit = async () => {
     setSubmitting(true);
-    socketApi.removeChannel(id);
-    setSubmitting(false);
+
+    console.log('blocked');
+    await socketApi.removeChannel({ id })
+      .then(() => {
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    console.log('unblocked');
 
     toast.success(t('toastify.deleted'));
     dispatch(modalActions.setAction(null));

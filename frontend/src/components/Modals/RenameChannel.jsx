@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -27,10 +27,21 @@ const RenameChannel = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: ({ name }, actions) => {
+    onSubmit: async ({ name }, actions) => {
       actions.setSubmitting(true);
-      socketApi.renameChannel(id, name);
-      actions.setSubmitting(false);
+
+      console.log('blocked');
+      await socketApi.renameChannel({ id, name})
+        .then(() => {
+          actions.setSubmitting(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      console.log('unblocked');
+      // socketApi.renameChannel(id, name);
+      // actions.setSubmitting(false);
 
       toast.success(t('toastify.renamed'));
       dispatch(modalActions.setAction(null));

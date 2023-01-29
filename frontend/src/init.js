@@ -14,19 +14,22 @@ import SocketContext from './context/SocketContext';
 import { actions as messageActions } from './slices/messagesSlice';
 import { actions as channelsActions } from './slices/channelsSlice';
 
+
+i18n.use(initReactI18next).init({
+  fallbackLng: 'ru',
+  resources,
+});
+
+const rollbarConfig = {
+  accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+  environment: 'production',
+};
+
+
+
 const App = () => {
   const dispatch = useDispatch();
   const socket = io();
-
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    environment: 'production',
-  };
-
-  i18n.use(initReactI18next).init({
-    fallbackLng: 'ru',
-    resources,
-  });
 
   socket.on('newMessage', (payload) => {
     dispatch(messageActions.addMessage(payload));
@@ -41,29 +44,85 @@ const App = () => {
     dispatch(channelsActions.removeChannel(payload));
   });
 
-  const socketApi = {
-    newMessage: (...args) => socket.emit('newMessage', ...args, (response) => {
-      if (response.status === 'ok') {
-        return response.status;
-      }
-    }),
-    newChannel: (name) => {
-      socket.emit('newChannel', { name }, (response) => {
-        if (response.status === 'ok') {
-          dispatch(channelsActions.setCurrentChannelId(response.data.id));
+  const promisifyEmit = (socket, event) => (...args) => {
+    return new Promise((resolve, reject) => {
+      console.log('args', args);
+      switch (event) {
+        case 'newMessage': {
+          socket.emit(event, ...args, (response) => {
+            if (response.status === 'ok') {
+              resolve(response.status);
+            } else {
+              reject(response);
+            }
+          });
+          break;
         }
-      });
-    },
-    removeChannel: (id) => socket.emit('removeChannel', { id }, (response) => {
-      if (response.status === 'ok') {
-        return response.status;
+        case 'newChannel': {
+          const extract = args[0];
+          const { name } = extract;
+          socket.emit(event, { name }, (response) => {
+            if (response.status === 'ok') {
+              dispatch(channelsActions.setCurrentChannelId(response.data.id));
+              resolve(response.status);
+            } else {
+              reject(response);
+            }
+          });
+          break;
+        }
+        case 'renameChannel': {
+          const extract = args[0];
+          const { id, name } = extract;
+          socket.emit('renameChannel', { id, name }, (response) => {
+              if (response.status === 'ok') {
+                resolve(response.status);
+            } else {
+              reject(response);
+            }
+          });
+          break;
+        }
+        case 'removeChannel': {
+          const extract = args[0];
+          const { id } = extract;
+          socket.emit('removeChannel', { id }, (response) => {
+              if (response.status === 'ok') {
+                resolve(response.status);
+            } else {
+              reject(response);
+            }
+          });
+          break;
+        }
+        default:
+          throw new Error('Неизвестная ошибка');
       }
-    }),
-    renameChannel: (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
-      if (response.status === 'ok') {
-        return response.status;
-      }
-    }),
+    });
+  };
+
+  const socketApi = {
+    newMessage: promisifyEmit(socket, 'newMessage'),
+    newChannel: promisifyEmit(socket, 'newChannel'),
+    removeChannel: promisifyEmit(socket, 'removeChannel'),
+    renameChannel: promisifyEmit(socket, 'renameChannel'),
+    // newChannel: (name) => {
+    //   socket.emit('newChannel', { name }, (response) => {
+    //     if (response.status === 'ok') {
+    //       dispatch(channelsActions.setCurrentChannelId(response.data.id));
+    //     }
+    //   });
+    // },
+    // removeChannel: (id) => socket.emit('removeChannel', { id }, (response) => {
+    //   if (response.status === 'ok') {
+    //     return response.status;
+    //   }
+    // }),
+    // renameChannel: (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
+    //   if (response.status === 'ok') {
+    //     return response.status;
+    //   }
+    // }),
   };
 
   return (

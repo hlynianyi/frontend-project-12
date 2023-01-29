@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import { Form, Modal, Button } from 'react-bootstrap';
@@ -10,13 +10,10 @@ import { useSocket } from '../../hooks/index';
 
 const AddModal = () => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-
+  const socketApi = useSocket();
   const channelsNames = useSelector(({ channels }) => channels.channelsList)
     .map(({ name }) => name);
-
-  const socketApi = useSocket();
 
   const formik = useFormik({
     initialValues: {
@@ -25,13 +22,40 @@ const AddModal = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: ({ name }, actions) => {
+    onSubmit: async ({ name }, actions) => {
       actions.setSubmitting(true);
-      socketApi.newChannel(name);
-      actions.setSubmitting(false);
+
+      console.log('blocked');
+      await socketApi.newChannel({ name })
+        .then(() => {
+          actions.setSubmitting(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      console.log('unblocked');
 
       toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));
+      // try {
+      //   actions.setSubmitting(true);
+
+      //   await socketApi.newChannel().then()
+        
+      //   // socketApi.newChannel(name);
+      //   actions.setSubmitting(false);
+
+      //   toast.success(t('toastify.added'));
+      //   dispatch(modalActions.setAction(null));
+      // } catch (error) {
+      //   console.log('error :>> ', error);
+      //   if (error.message === 'Network Error') {
+      //     toast.error(t('toastify.network'));
+      //   } else {
+      //     toast.error(t('toastify.unknown'));
+      //   }
+      // }
     },
   });
 

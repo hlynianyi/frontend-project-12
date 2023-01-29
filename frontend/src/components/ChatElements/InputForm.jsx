@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../hooks';
+import { useAuth, useSocket } from '../../hooks';
 
 const InputForm = () => {
   const { t } = useTranslation();
-
+  const auth = useAuth();
+  const socketApi = useSocket();
   const channelId = useSelector(({ channels }) => channels.currentChannelId);
 
-  const username = localStorage.getItem('user');
-
-  // const [isSubmitting, setSubmitting] = useState(false);
-
-  const socketApi = useSocket();
+  const username = auth.user;
 
   const formik = useFormik({
     initialValues: {
@@ -24,10 +21,19 @@ const InputForm = () => {
     validationSchema: yup.object({
       body: yup.string().required(),
     }),
-    onSubmit: ({ body }, { setSubmitting, resetForm}) => {
+    onSubmit: async ({ body }, { setSubmitting, resetForm }) => {
       setSubmitting(true);
-      socketApi.newMessage({ body, channelId, username });
-      setSubmitting(false);
+
+      console.log('blocked');
+      await socketApi.newMessage({ body, channelId, username })
+        .then(() => {
+          setSubmitting(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      console.log('unblocked');
 
       resetForm();
     },
