@@ -21,16 +21,8 @@ const InputForm = () => {
     validationSchema: yup.object({
       body: yup.string().required(),
     }),
-    onSubmit: async ({ body }, { setSubmitting, resetForm }) => {
-      setSubmitting(true);
-
+    onSubmit: async ({ body }, { resetForm }) => {
       await socketApi.newMessage({ body, channelId, username })
-        .then(() => {
-          setSubmitting(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
 
       resetForm();
     },

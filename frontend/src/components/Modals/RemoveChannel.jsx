@@ -15,14 +15,8 @@ const RemoveChannel = () => {
 
   const submit = async () => {
     setSubmitting(true);
-
-    await socketApi.removeChannel({ id })
-      .then(() => {
-        setSubmitting(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    await socketApi.removeChannel({ id });
+    setSubmitting(false);
 
     toast.success(t('toastify.deleted'));
     dispatch(modalActions.setAction(null));

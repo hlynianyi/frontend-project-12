@@ -12,7 +12,8 @@ import { useAuth } from '../hooks/index.jsx';
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  return auth.loggedIn ? <Outlet /> : <Navigate to="/login" />;
+
+  return auth.user ? <Outlet /> : <Navigate to="/login" />;
 };
 
 const Router = () => (

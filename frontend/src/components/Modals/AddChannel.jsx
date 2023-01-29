@@ -22,16 +22,8 @@ const AddModal = () => {
     validationSchema: yup.object({
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
-    onSubmit: async ({ name }, actions) => {
-      actions.setSubmitting(true);
-
-      await socketApi.newChannel({ name })
-        .then(() => {
-          actions.setSubmitting(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    onSubmit: async ({ name }) => {
+      await socketApi.newChannel({ name });
 
       toast.success(t('toastify.added'));
       dispatch(modalActions.setAction(null));

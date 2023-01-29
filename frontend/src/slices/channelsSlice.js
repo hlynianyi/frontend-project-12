@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   channelsList: [],
-  currentChannelId: 0,
+  currentChannelId: null,
 };
 
 const channelsSlice = createSlice({

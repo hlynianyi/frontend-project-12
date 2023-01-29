@@ -24,15 +24,7 @@ const RenameChannel = () => {
       name: yup.string().required(t('errors.required')).notOneOf(channelsNames),
     }),
     onSubmit: async ({ name }, actions) => {
-      actions.setSubmitting(true);
-
-      await socketApi.renameChannel({ id, name })
-        .then(() => {
-          actions.setSubmitting(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      await socketApi.renameChannel({ id, name });
 
       toast.success(t('toastify.renamed'));
       dispatch(modalActions.setAction(null));

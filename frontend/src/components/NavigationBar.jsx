@@ -5,7 +5,6 @@ import { useAuth } from '../hooks/index.jsx';
 
 const NavigationBar = () => {
   const { t } = useTranslation();
-
   const auth = useAuth();
 
   return (
@@ -14,7 +13,7 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           {t('navbar.title')}
         </Navbar.Brand>
-        {auth.loggedIn && (
+        {auth.user && (
           <Button variant="primary" as={Link} to="/login" onClick={auth.logOut}>
             {t('navbar.button')}
           </Button>

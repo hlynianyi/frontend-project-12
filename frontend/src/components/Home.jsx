@@ -33,7 +33,7 @@ const Home = () => {
         if (error.response?.status === 401) {
           auth.logOut();
           navigate('/login');
-        } else if (error.message === 'Network Error') {
+        } else if (error.isAxiosError) {
           toast.error(t('toastify.network'));
         } else {
           toast.error(t('toastify.unknown'));
