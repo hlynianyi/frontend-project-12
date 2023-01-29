@@ -27,8 +27,8 @@ const App = () => {
     dispatch(channelsActions.removeChannel(payload));
   });
 
-  const promisifyEmit = (event) => (...args) => {
-    return new Promise((resolve, reject) => {
+  const promisifyEmit = (event) => (...args) => 
+    new Promise((resolve, reject) => {
       switch (event) {
         case 'newMessage': {
           socket.emit(event, ...args, (response) => {
@@ -69,8 +69,8 @@ const App = () => {
           const extract = args[0];
           const { id } = extract;
           socket.emit('removeChannel', { id }, (response) => {
-              if (response.status === 'ok') {
-                resolve(response.status);
+            if (response.status === 'ok') {
+              resolve(response.status);
             } else {
               reject(response);
             }
@@ -81,7 +81,6 @@ const App = () => {
           throw new Error('Неизвестная ошибка');
       }
     });
-  };
 
   const socketApi = {
     newMessage: promisifyEmit('newMessage'),

@@ -13,7 +13,7 @@ const init = async () => {
     fallbackLng: 'ru',
     resources,
   });
-  
+
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
     environment: 'production',
