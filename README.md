@@ -30,5 +30,5 @@ Censorship (leo-profanity) has been applied to the interface.
 # Deployed on Vercel:
 
 ```
-https://hlynianyi-chat.up.railway.app/
+https://hlynianyi-slack.up.railway.app/
 ```
