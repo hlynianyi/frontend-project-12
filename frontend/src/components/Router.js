@@ -9,6 +9,7 @@ import Error from './ErrorPage.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../hooks/index.jsx';
+import { Container } from 'react-bootstrap';
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -18,15 +19,18 @@ const PrivateRoute = () => {
 
 const Router = () => (
   <BrowserRouter>
-    <NavigationBar />
-    <Routes>
-      <Route element={<PrivateRoute />}>
-        <Route path="/" element={<Home />} />
-      </Route>
-      <Route path="*" element={<Error />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-    </Routes>
+    <Container className='d-flex flex-column h-100'>
+      <NavigationBar />
+      <Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="*" element={<Error />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </Container>
+    
   </BrowserRouter>
 );
 

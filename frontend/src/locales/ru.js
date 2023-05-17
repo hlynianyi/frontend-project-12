@@ -3,6 +3,7 @@ export default {
   translation: {
     navbar: {
       title: 'Hexlet Chat',
+      language: 'RU',
       button: 'Выйти',
     },
     login: {
