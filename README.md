@@ -7,6 +7,7 @@
 
 Project using Hexlet backend server for requests and auth operations.
 The registration, authorization, and logout functions have been implemented. 
+You can register as a new user or, for convenience, use the following login and password combination to sign in: **admin admin**.
 The user can interact with various channels, add-edit-delete them. Also, the user has access to the function of changing the interface locale (Russian and English languages are available). 
 The functionality of pop-up notifications (react-toastify) is operational. 
 Censorship (leo-profanity) has been applied to the interface.
@@ -30,5 +31,5 @@ Censorship (leo-profanity) has been applied to the interface.
 # Deployed on Railway:
 
 ```
-https://hlynianyi-slack.up.railway.app/
+https://slack-chat.up.railway.app/
 ```

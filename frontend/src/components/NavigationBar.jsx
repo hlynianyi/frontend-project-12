@@ -9,7 +9,6 @@ const NavigationBar = () => {
   const auth = useAuth();
 
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
-  console.log('language:', i18n.language);
   
   const changeLanguage = () => {
     const newLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
@@ -30,7 +29,7 @@ const NavigationBar = () => {
         {auth.user && (
           <Row>
             <Col>
-              <Button variant="light" onClick={changeLanguage}>
+              <Button className="me-2" variant="light" onClick={changeLanguage}>
                 {t('navbar.language')}
               </Button>
               <Button variant="danger" as={Link} to="/login" onClick={auth.logOut}>
